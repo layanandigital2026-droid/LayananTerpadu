@@ -135,29 +135,6 @@ button:hover {
 </div>
 
 <script>
-
-// ⏰ VALIDASI HARI & JAM
-const now = new Date();
-const hari = now.getDay(); // 0=minggu, 6=sabtu
-const jam = now.getHours();
-
-// ❌ Sabtu & Minggu tutup
-if (hari === 0 || hari === 6) {
-  alert("Mohon maaf, layanan antrian tidak tersedia di hari Sabtu dan Minggu.");
-  return;
-}
-
-// ⏰ Senin - Kamis (1-4) max jam 12
-if (hari >= 1 && hari <= 4 && jam >= 12) {
-  alert("Pengambilan antrian hari Senin - Kamis hanya sampai pukul 12:00.");
-  return;
-}
-
-// ⏰ Jumat (5) max jam 10
-if (hari === 5 && jam >= 10) {
-  alert("Pengambilan antrian hari Jumat hanya sampai pukul 10:00.");
-  return;
-}
 let isSubmitting = false;
 
 // ambil semua elemen
@@ -174,13 +151,38 @@ const setuju = document.getElementById("setuju");
 const btnKirim = document.getElementById("btnKirim");
 const hasil = document.getElementById("hasil");
 
-// event klik
+// event klik tombol
 btnKirim.addEventListener("click", kirim);
 
 function kirim() {
 
+  // ⛔ cegah klik 2x
   if (isSubmitting) return;
 
+  // ⏰ VALIDASI HARI & JAM
+  const now = new Date();
+  const hari = now.getDay(); // 0=minggu, 6=sabtu
+  const jam = now.getHours();
+
+  // ❌ Sabtu & Minggu tutup
+  if (hari === 0 || hari === 6) {
+    alert("Mohon maaf, layanan antrian tidak tersedia di hari Sabtu dan Minggu.");
+    return;
+  }
+
+  // ⏰ Senin - Kamis max jam 12
+  if (hari >= 1 && hari <= 4 && jam >= 12) {
+    alert("Pengambilan antrian Senin-Kamis hanya sampai pukul 12:00.");
+    return;
+  }
+
+  // ⏰ Jumat max jam 10
+  if (hari === 5 && jam >= 10) {
+    alert("Pengambilan antrian Jumat hanya sampai pukul 10:00.");
+    return;
+  }
+
+  // ✅ validasi input
   if (
     !nama.value || !nik.value || !wa.value || 
     !warga.value || !alamat.value || !tanggal.value || !hubungan.value
@@ -189,6 +191,7 @@ function kirim() {
     return;
   }
 
+  // ✅ cek persetujuan
   if (!setuju.checked) {
     alert("Anda harus menyetujui peraturan!");
     return;
@@ -196,6 +199,7 @@ function kirim() {
 
   isSubmitting = true;
 
+  // ⛔ disable tombol
   btnKirim.disabled = true;
   btnKirim.innerText = "Mengirim...";
 
@@ -221,22 +225,25 @@ function kirim() {
       hasil.style.color = "red";
 
     } else if (data.status === "ok") {
-     hasil.innerHTML =
-    "✅ Nomor Antrian Anda: <b>" + data.nomor + "</b><br><br>" +
-    "Silakan screenshot sebagai bukti antrian dan ditunjukkan saat berkunjung.<br><br>" +
-    "<button id='btnBack'>Kembali ke Beranda</button>";
+      hasil.innerHTML =
+        "✅ Nomor Antrian Anda: <b>" + data.nomor + "</b><br><br>" +
+        "Silakan screenshot sebagai bukti antrian dan ditunjukkan saat berkunjung.<br><br>" +
+        "<button id='btnBack'>Kembali ke Beranda</button>";
 
       hasil.style.color = "green";
 
+      // tombol kembali
       document.getElementById("btnBack").onclick = function() {
         window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/halaman-muka";
       };
 
+      // redirect otomatis (5 detik)
       setTimeout(() => {
         window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/halaman-muka";
       }, 5000);
     }
 
+    // aktifkan kembali tombol
     isSubmitting = false;
     btnKirim.disabled = false;
     btnKirim.innerText = "Kirim";

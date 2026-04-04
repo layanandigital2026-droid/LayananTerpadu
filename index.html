@@ -135,7 +135,6 @@ button:hover {
 
 <script>
 function kirim() {
-
   if (
     !nama.value || !nik.value || !wa.value || 
     !warga.value || !alamat.value || !tanggal.value || !hubungan.value
@@ -170,14 +169,15 @@ function kirim() {
   .then(res => res.json())
   .then(data => {
 
-    if (data.status === "full") {
-      hasil.innerHTML = "❌ Kuota penuh";
-      hasil.style.color = "red";
-    } else {
-      hasil.innerHTML =
-        "✅ Berhasil! Nomor Antrian Anda: <b>" + data.nomor + "</b>";
-      hasil.style.color = "green";
-    }
+  if (data.status === "full") {
+    hasil.innerHTML = "❌ Kuota penuh";
+    hasil.style.color = "red";
+  } else if (data.status === "ok") {
+    hasil.innerHTML =
+      "✅ Nomor Antrian Anda: <b>" + data.nomor + "</b><br><br>" +
+      "<button onclick='kembali()'>Kembali ke Beranda</button>";
+    hasil.style.color = "green";
+  }
 
     // ✅ Aktifkan lagi tombol
     btnKirim.disabled = false;
@@ -191,15 +191,7 @@ function kirim() {
     btnKirim.innerText = "Kirim";
   });
 }
-if (data.status === "ok") {
-  hasil.innerHTML =
-   "✅ Nomor Antrian Anda: <b>" + data.nomor + "</b><br><br>" +
-  "<button onclick='kembali()'>Kembali ke Beranda</button>";
-}
 
-  function kembali() {
-  window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/halaman-muka";
-}
 </script>
 
 </body>

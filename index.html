@@ -74,12 +74,12 @@ button:hover {
 
   <div class="card">
     <label>Nomor KTP/NIK *</label>
-    <input id="nik">
+    <input id="nik" type=number>
   </div>
 
   <div class="card">
     <label>Nomor WhatsApp *</label>
-    <input id="wa">
+    <input id="wa" type=number>
   </div>
 
   <div class="card">
@@ -102,22 +102,39 @@ button:hover {
     <input id="hubungan">
   </div>
 
-  <div class="card">
-    <label>Apakah membawa barang? *</label>
-    <select id="barang">
-      <option>Ya</option>
-      <option>Tidak</option>
-    </select>
-  </div>
+<div class="card">
+  <label>Apakah membawa barang? *</label>
+  <select id="barang" onchange="toggleBarang()">
+    <option>Ya</option>
+    <option>Tidak</option>
+  </select>
+</div>
 
-  <div class="card">
-    <label>Jika ya, sebutkan</label>
-    <select id="jenis_barang">
-      <option>Makanan</option>
-      <option>Pakaian</option>
-      <option>Lainnya</option>
-    </select>
-  </div>
+<div class="card">
+  <label>Jika ya, sebutkan</label>
+  <select id="jenis_barang">
+    <option>Makanan</option>
+    <option>Pakaian</option>
+    <option>Lainnya</option>
+  </select>
+</div>
+
+<script>
+function toggleBarang() {
+  var barang = document.getElementById("barang").value;
+  var jenis = document.getElementById("jenis_barang");
+
+  if (barang === "Tidak") {
+    jenis.disabled = true;
+    jenis.value = ""; // optional: kosongkan pilihan
+  } else {
+    jenis.disabled = false;
+  }
+}
+
+// Jalankan saat pertama load (biar langsung sesuai default)
+window.onload = toggleBarang;
+</script>
 
   <div class="card">
     <label>

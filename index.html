@@ -172,11 +172,18 @@ function kirim() {
   if (data.status === "full") {
     hasil.innerHTML = "❌ Kuota penuh";
     hasil.style.color = "red";
-  } else if (data.status === "ok") {
-    hasil.innerHTML =
-      "✅ Nomor Antrian Anda: <b>" + data.nomor + "</b><br><br>" +
-      "<button onclick='kembali()'>Kembali ke Beranda</button>";
-    hasil.style.color = "green";
+  } } else if (data.status === "ok") {
+  hasil.innerHTML =
+    "✅ Nomor Antrian Anda: <b>" + data.nomor + "</b><br><br>" +
+    "Anda akan diarahkan ke beranda...";
+
+  hasil.style.color = "green";
+
+  // ⏳ redirect otomatis setelah 3 detik
+  setTimeout(() => {
+    window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/halaman-muka";
+  }, 3000);
+}
   }
 
     // ✅ Aktifkan lagi tombol

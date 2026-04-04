@@ -135,6 +135,8 @@ button:hover {
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+
 let isSubmitting = false;
 
 // ambil semua elemen
@@ -151,32 +153,35 @@ const setuju = document.getElementById("setuju");
 const btnKirim = document.getElementById("btnKirim");
 const hasil = document.getElementById("hasil");
 
+// pastikan tombol ada
+if (!btnKirim) {
+  console.error("Tombol Kirim tidak ditemukan!");
+  return;
+}
+
 // event klik tombol
 btnKirim.addEventListener("click", kirim);
 
 function kirim() {
 
-  // ⛔ cegah klik 2x
+  // ⛔ cegah double klik
   if (isSubmitting) return;
 
-  // ⏰ VALIDASI HARI & JAM
+  // ⏰ validasi hari & jam
   const now = new Date();
   const hari = now.getDay(); // 0=minggu, 6=sabtu
   const jam = now.getHours();
 
-  // ❌ Sabtu & Minggu tutup
   if (hari === 0 || hari === 6) {
-    alert("Mohon maaf, layanan antrian tidak tersedia di hari Sabtu dan Minggu.");
+    alert("Mohon maaf, layanan tidak tersedia di hari Sabtu & Minggu.");
     return;
   }
 
-  // ⏰ Senin - Kamis max jam 12
   if (hari >= 1 && hari <= 4 && jam >= 12) {
     alert("Pengambilan antrian Senin-Kamis hanya sampai pukul 12:00.");
     return;
   }
 
-  // ⏰ Jumat max jam 10
   if (hari === 5 && jam >= 10) {
     alert("Pengambilan antrian Jumat hanya sampai pukul 10:00.");
     return;
@@ -191,7 +196,7 @@ function kirim() {
     return;
   }
 
-  // ✅ cek persetujuan
+  // ✅ checkbox
   if (!setuju.checked) {
     alert("Anda harus menyetujui peraturan!");
     return;
@@ -199,7 +204,7 @@ function kirim() {
 
   isSubmitting = true;
 
-  // ⛔ disable tombol
+  // disable tombol
   btnKirim.disabled = true;
   btnKirim.innerText = "Mengirim...";
 
@@ -237,13 +242,13 @@ function kirim() {
         window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/halaman-muka";
       };
 
-      // redirect otomatis (5 detik)
+      // redirect otomatis
       setTimeout(() => {
         window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/halaman-muka";
       }, 5000);
     }
 
-    // aktifkan kembali tombol
+    // aktifkan tombol lagi
     isSubmitting = false;
     btnKirim.disabled = false;
     btnKirim.innerText = "Kirim";
@@ -257,8 +262,10 @@ function kirim() {
     btnKirim.disabled = false;
     btnKirim.innerText = "Kirim";
   });
-}
-</script>
 
+}
+
+});
+</script>
 </body>
 </html>

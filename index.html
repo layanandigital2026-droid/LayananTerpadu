@@ -107,7 +107,7 @@ button:hover {
 
 <div class="card">
   <label>Apakah membawa barang? *</label>
-  <select id="barang" onchange="toggleBarang()">
+  <select id="barang">
     <option value="Ya">Ya</option>
     <option value="Tidak" selected>Tidak</option>
   </select>
@@ -117,26 +117,29 @@ button:hover {
   <label>Jika ya, sebutkan</label>
   <select id="jenis_barang">
     <option value="">-- Pilih --</option>
-    <option>Makanan</option>
-    <option>Pakaian</option>
-    <option>Lainnya</option>
+    <option value="Makanan">Makanan</option>
+    <option value="Pakaian">Pakaian</option>
+    <option value="Lainnya">Lainnya</option>
   </select>
 </div>
 
 <script>
-function toggleBarang() {
-  var barang = document.getElementById("barang").value;
-  var jenis = document.getElementById("jenis_barang");
+const barang = document.getElementById("barang");
+const jenis = document.getElementById("jenis_barang");
 
-  if (barang === "Tidak") {
+function toggleBarang() {
+  if (barang.value === "Tidak") {
     jenis.disabled = true;
-    jenis.value = "";
+    jenis.value = ""; // reset pilihan
   } else {
     jenis.disabled = false;
   }
 }
 
-// WAJIB: jalankan saat halaman pertama kali load
+// event saat berubah
+barang.addEventListener("change", toggleBarang);
+
+// jalankan saat pertama load
 document.addEventListener("DOMContentLoaded", toggleBarang);
 </script>
 

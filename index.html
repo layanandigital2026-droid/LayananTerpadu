@@ -197,39 +197,6 @@ const hasil = document.getElementById("hasil");
 // event klik tombol
 btnKirim.addEventListener("click", function() {
 
-  const now = new Date();
-  const hari = now.getDay(); // 0=minggu, 6=sabtu
-
-   ❌ langsung blok kalau weekend
-  if (hari === 0 || hari === 6) {
-    alert("Mohon maaf, pengambilan antrian tidak tersedia di hari Sabtu & Minggu.");
-    return;
-  }
-
-  // lanjut ke proses kirim
- 
-  kirim();
-});
-
-function kirim() {
-
-  if (isSubmitting) return;
-
-  const now = new Date();
-  const hari = now.getDay();
-  const jam = now.getHours();
-
-  // ⏰ batas jam tetap berlaku
-  if (hari >= 1 && hari <= 4 && jam >= 12) {
-    alert("Pengambilan antrian Senin-Kamis hanya sampai pukul 12:00.");
-    return;
-  }
-
-  if (hari === 5 && jam >= 10) {
-    alert("Pengambilan antrian Jumat hanya sampai pukul 10:00.");
-    return;
-  }
-
   // validasi form
   if (
     !nama.value || !nik.value || !wa.value || 

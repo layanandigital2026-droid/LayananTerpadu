@@ -143,12 +143,20 @@ barang.addEventListener("change", toggleBarang);
 document.addEventListener("DOMContentLoaded", toggleBarang);
 </script>
 
-  <div class="card">
-  <label style="display:flex; align-items:center; gap:8px;">
+  <style>
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+</style>
+
+<div class="card">
+  <label class="checkbox-row">
     <input type="checkbox" id="setuju">
     Saya bersedia mematuhi seluruh peraturan
   </label>
-  </div>
+</div>
 
   <!--button onclick="kirim()">Kirim</button--!>
   <!--button id="btnKirim" onclick="kirim()">Kirim</button--!>

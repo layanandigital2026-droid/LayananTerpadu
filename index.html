@@ -196,7 +196,7 @@ const hasil = document.getElementById("hasil");
 
 // event klik tombol
 btnKirim.addEventListener("click", function() {
-
+if (isSubmitting) return;
   // validasi form
   if (
     !nama.value || !nik.value || !wa.value || 

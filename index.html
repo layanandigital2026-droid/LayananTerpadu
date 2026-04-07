@@ -213,23 +213,20 @@ button {
 
   </div>
 
-
 </div>
-
-
   <!--button onclick="kirim()">Kirim</button-->
   <!--button id="btnKirim" onclick="kirim()">Kirim</button-->
   <!--button id="btnKirim">Kirim</button-->
-
 </div>
   
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
 let isSubmitting = false;
 let hari = new Date().toLocaleDateString("id-ID", { weekday: 'long' });
 
-// ambil elemen
+// ambil semua elemen
 const nama = document.getElementById("nama");
 const nik = document.getElementById("nik");
 const wa = document.getElementById("wa");
@@ -243,6 +240,13 @@ const btnKirim = document.getElementById("btnKirim");
 const hasil = document.getElementById("hasil");
 const inputTanggal = document.getElementById("tanggal");
 
+
+// ===== DEBUG =====
+console.log("Script aktif");
+console.log(btnKirim);
+// =================
+
+
 // toggle barang
 function toggleBarang() {
   if (barang.value === "Tidak") {
@@ -255,12 +259,14 @@ function toggleBarang() {
 barang.addEventListener("change", toggleBarang);
 toggleBarang();
 
-// klik kirim
+
+// klik tombol
 btnKirim.addEventListener("click", function() {
+
+  console.log("Klik terdeteksi");
 
   if (isSubmitting) return;
 
-  // validasi
   if (
     !nama.value || !nik.value || !wa.value || 
     !warga.value || !alamat.value || !inputTanggal.value || !hubungan.value
@@ -338,19 +344,6 @@ btnKirim.addEventListener("click", function() {
     📸 Screenshot sebagai bukti antrian
   </p>
 
-  <button onclick="window.location.href='https://sites.google.com/view/layanan-terpadu-lakusim/home'"
-    style="
-    margin-top:10px;
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    background:linear-gradient(135deg,#4facfe,#2a7cff);
-    color:white;
-    width:100%;
-  ">
-    Kembali ke Home
-  </button>
-
 </div>
       `;
 
@@ -364,7 +357,7 @@ btnKirim.addEventListener("click", function() {
   })
   .catch(err => {
     console.error(err);
-    hasil.innerHTML = "❌ Gagal kirim (cek koneksi / script)";
+    hasil.innerHTML = "❌ Gagal kirim";
     hasil.style.color = "red";
 
     isSubmitting = false;
@@ -376,6 +369,7 @@ btnKirim.addEventListener("click", function() {
 
 });
 </script>
+  
  <div class="footer">
   © 2026 Layanan Terpadu
   dibuat dengan ❤️ untuk kemudahan pelayanan

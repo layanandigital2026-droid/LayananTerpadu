@@ -30,6 +30,7 @@ body {
   border-radius: 18px;
   padding: 18px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  margin-top: 20px;
 }
 
 /* HEADER */
@@ -77,12 +78,12 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* CHECKBOX */
-.checkbox-wrap {
+  .checkbox-wrap {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
-  font-size: 13px;
-  margin: 10px 0;
+  font-size: 12px;
+  margin-top: 10px;
 }
 
 /* BUTTON */
@@ -95,7 +96,7 @@ button {
   width: 100%;
   font-size: 15px;
   font-weight: 600;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 /* RESULT */
@@ -215,18 +216,9 @@ barang.addEventListener("change", toggleBarang);
 document.addEventListener("DOMContentLoaded", toggleBarang);
 </script>
 
-<div class="card">
-  <label class="checkbox-wrap">
-    <input type="checkbox" id="setuju">
-    <span>Saya bersedia mematuhi seluruh peraturan</span>
-  </label>
-</div>
-
   <!--button onclick="kirim()">Kirim</button-->
   <!--button id="btnKirim" onclick="kirim()">Kirim</button-->
-  <button id="btnKirim">Kirim</button>
-
-  <div class="result" id="hasil"></div>
+  <!--button id="btnKirim">Kirim</button-->
 
 </div>
   <script>
@@ -308,7 +300,7 @@ if (isSubmitting) return;
         window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/halaman-muka";
       }, 5000);
     }
-
+    
     isSubmitting = false;
     btnKirim.disabled = false;
     btnKirim.innerText = "Kirim";

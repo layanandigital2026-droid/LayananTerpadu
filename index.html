@@ -21,8 +21,9 @@ body {
 .container {
   max-width: 420px;
   margin: auto;
-  padding: 16px;
+  padding: 15px;
 }
+
 
 /* CARD */
 .card {
@@ -31,6 +32,7 @@ body {
   padding: 18px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
   margin-top: 20px;
+  margin: 20px auto;
 }
 
 /* HEADER */
@@ -43,14 +45,20 @@ body {
 }
 
 /* FORM GROUP */
-.form-group {
-  margin-bottom: 14px;
+
+* {
+  box-sizing: border-box;
 }
 
-.form-group label {
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+  .form-group label {
   font-size: 13px;
   color: #374151;
-}
+  margin-bottom: 4px;
+  }
 
 /* INPUT */
 input, select, textarea {
@@ -80,10 +88,20 @@ input:focus, select:focus, textarea:focus {
 /* CHECKBOX */
   .checkbox-wrap {
   display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 12px;
-  margin-top: 10px;
+  align-items: center; /* ini kunci biar sejajar */
+  gap: 10px;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.checkbox-wrap input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.checkbox-wrap span {
+  flex: 1;
 }
 
 /* BUTTON */

@@ -216,25 +216,6 @@ button {
 
 </div>
 
-<script>
-const barang = document.getElementById("barang");
-const jenis = document.getElementById("jenis_barang");
-
-function toggleBarang() {
-  if (barang.value === "Tidak") {
-    jenis.disabled = true;
-    jenis.value = ""; // reset pilihan
-  } else {
-    jenis.disabled = false;
-  }
-}
-
-// event saat berubah
-barang.addEventListener("change", toggleBarang);
-
-// jalankan saat pertama load
-document.addEventListener("DOMContentLoaded", toggleBarang);
-</script>
 
   <!--button onclick="kirim()">Kirim</button-->
   <!--button id="btnKirim" onclick="kirim()">Kirim</button-->

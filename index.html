@@ -253,14 +253,15 @@ const nik = document.getElementById("nik");
 const wa = document.getElementById("wa");
 const warga = document.getElementById("warga");
 const alamat = document.getElementById("alamat");
-const tanggal = document.getElementById("tanggal");
 const hubungan = document.getElementById("hubungan");
 const barang = document.getElementById("barang");
 const jenis_barang = document.getElementById("jenis_barang");
 const setuju = document.getElementById("setuju");
 const btnKirim = document.getElementById("btnKirim");
 const hasil = document.getElementById("hasil");
-const tanggal = new Date().toLocaleDateString("id-ID");
+const inputTanggal = document.getElementById("tanggal");
+const today = new Date().toLocaleDateString("id-ID");
+tanggal: inputTanggal.value,
 
 // event klik tombol
 btnKirim.addEventListener("click", function() {
@@ -307,7 +308,7 @@ if (isSubmitting) return;
       hasil.style.color = "red";
 
     } else if (data.status === "ok") {
-      hasil.innerHTML = "
+      hasil.innerHTML = hasil.innerHTML = `
 <div style="
   margin-top:15px;
   padding:20px;
@@ -322,9 +323,9 @@ if (isSubmitting) return;
 
   <div style="border-top:1px dashed #ccc;margin:12px 0;"></div>
 
-  <p style="margin:5px 0;"><b>Nama</b><br>${nama.value}</p>
-  <p style="margin:5px 0;"><b>Warga Binaan</b><br>${warga.value}</p>
-  <p style="margin:5px 0;"><b>Tanggal</b><br>${tanggal}</p>
+  <p><b>Nama</b><br>${nama.value}</p>
+  <p><b>Warga Binaan</b><br>${warga.value}</p>
+  <p><b>Tanggal</b><br>${today}</p>
   <p><b>Hari</b><br>${hari}</p>
 
   <div style="
@@ -342,20 +343,12 @@ if (isSubmitting) return;
     📸 Screenshot sebagai bukti antrian
   </p>
 
-  <button onclick="window.location.href='https://sites.google.com/view/layanan-terpadu-lakusim/home'"
-    style="
-    margin-top:10px;
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    background:linear-gradient(135deg,#4facfe,#2a7cff);
-    color:white;
-    width:100%;
-  ">
+  <button onclick="window.location.href='https://sites.google.com/view/layanan-terpadu-lakusim/home'">
     Kembali ke Home
   </button>
 
 </div>
+`;
 
       hasil.style.color = "green";
 

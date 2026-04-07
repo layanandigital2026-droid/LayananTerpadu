@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+<meta name="theme-color" content="#3b82f6">
 <head>
 <meta charset="UTF-8">
 <title>Form Antrian Kunjungan</title>
@@ -18,19 +19,17 @@ body {
 
 /* CONTAINER */
 .container {
-  max-width: 520px;
+  max-width: 420px;
   margin: auto;
-  padding: 20px;
+  padding: 16px;
 }
 
 /* CARD */
 .card {
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(12px);
+  background: white;
+  border-radius: 18px;
   padding: 18px;
-  border-radius: 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 /* HEADER */
@@ -38,30 +37,57 @@ body {
   text-align: center;
   font-size: 18px;
   font-weight: 600;
-  color: #2c3e70;
+  color: #1e3a8a;
+  margin-bottom: 15px;
+}
+
+/* FORM GROUP */
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  font-size: 13px;
+  color: #374151;
 }
 
 /* INPUT */
 input, select, textarea {
   width: 100%;
   padding: 11px;
-  margin-top: 8px;
+  margin-top: 6px;
   border-radius: 10px;
-  border: 1px solid #dbe3f3;
+  border: 1px solid #dbeafe;
   font-size: 14px;
   background: #f8fbff;
-  outline: none;
 }
 
-/* FOCUS EFFECT */
+/* FOCUS */
 input:focus, select:focus, textarea:focus {
-  border-color: #4facfe;
-  box-shadow: 0 0 0 2px rgba(79,172,254,0.15);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+}
+
+/* SECTION */
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 15px 0 10px;
+  color: #1e3a8a;
+}
+
+/* CHECKBOX */
+.checkbox-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  margin: 10px 0;
 }
 
 /* BUTTON */
 button {
-  background: linear-gradient(135deg,#4facfe,#2a7cff);
+  background: linear-gradient(135deg,#3b82f6,#60a5fa);
   color: white;
   padding: 13px;
   border: none;
@@ -70,39 +96,22 @@ button {
   font-size: 15px;
   font-weight: 600;
   margin-top: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 /* RESULT */
 .result {
-  text-align: center;
-  font-size: 15px;
   margin-top: 15px;
   padding: 12px;
   border-radius: 12px;
   background: #f1f6ff;
-}
-
-/* CHECKBOX */
-.checkbox-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-size: 13px;
+  text-align: center;
 }
 
 /* FOOTER */
 .footer {
   text-align: center;
   font-size: 12px;
-  color: #7a8bb5;
+  color: #6b7280;
   margin-top: 20px;
 }
 </style>
@@ -114,62 +123,76 @@ button:hover {
 
   <div class="card">
     <div class="header">📋 Form Kunjungan Lapas</div>
+
+    <!-- FORM -->
+    <div class="form-group">
+      <label>Nama Lengkap *</label>
+      <input id="nama">
+    </div>
+
+    <div class="form-group">
+      <label>Nomor KTP/NIK *</label>
+      <input id="nik">
+    </div>
+
+    <div class="form-group">
+      <label>Nomor WhatsApp *</label>
+      <input id="wa">
+    </div>
+
+    <div class="form-group">
+      <label>Nama Warga Binaan *</label>
+      <input id="warga">
+    </div>
+
+    <div class="form-group">
+      <label>Alamat *</label>
+      <textarea id="alamat"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Tanggal Kunjungan *</label>
+      <input type="date" id="tanggal">
+    </div>
+
+    <div class="form-group">
+      <label>Hubungan *</label>
+      <input id="hubungan">
+    </div>
+
+    <!-- SECTION BARANG -->
+    <div class="section-title">Barang Bawaan</div>
+
+    <div class="form-group">
+      <label>Apakah membawa barang?</label>
+      <select id="barang">
+        <option value="Ya">Ya</option>
+        <option value="Tidak" selected>Tidak</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Jika ya, sebutkan</label>
+      <select id="jenis_barang">
+        <option value="">-- Pilih --</option>
+        <option>Makanan</option>
+        <option>Pakaian</option>
+        <option>Lainnya</option>
+      </select>
+    </div>
+
+    <!-- CHECKBOX -->
+    <div class="checkbox-wrap">
+      <input type="checkbox" id="setuju">
+      <span>Saya bersedia mematuhi seluruh peraturan</span>
+    </div>
+
+    <button id="btnKirim">Kirim</button>
+
+    <div class="result" id="hasil"></div>
+
   </div>
 
-  <div class="card">
-    <label>Nama Lengkap *</label>
-    <input id="nama">
-  </div>
-
-  <div class="card">
-    <label>Nomor KTP/NIK *</label>
-    <input id="nik">
-  </div>
-
-  <div class="card">
-    <label>Nomor WhatsApp *</label>
-    <input id="wa">
-  </div>
-
-  <div class="card">
-    <label>Nama Warga Binaan *</label>
-    <input id="warga">
-  </div>
-
-  <div class="card">
-    <label>Alamat *</label>
-    <textarea id="alamat"></textarea>
-  </div>
-
-  <div class="card">
-    <label>Tanggal Kunjungan *</label>
-    <input type="date" id="tanggal">
-  </div>
-
-  <div class="card">
-    <label>Hubungan dengan Warga Binaan *</label>
-    <input id="hubungan">
-  </div>
-
-
-
-
-<div class="card">
-  <label>Apakah membawa barang? *</label>
-  <select id="barang">
-    <option value="Ya">Ya</option>
-    <option value="Tidak" selected>Tidak</option>
-  </select>
-</div>
-
-<div class="card">
-  <label>Jika ya, sebutkan</label>
-  <select id="jenis_barang">
-    <option value="">-- Pilih --</option>
-    <option value="Makanan">Makanan</option>
-    <option value="Pakaian">Pakaian</option>
-    <option value="Lainnya">Lainnya</option>
-  </select>
 </div>
 
 <script>

@@ -245,6 +245,7 @@ document.addEventListener("DOMContentLoaded", toggleBarang);
 document.addEventListener("DOMContentLoaded", function() {
 
 let isSubmitting = false;
+let hari = new Date().toLocaleDateString("id-ID", { weekday: 'long' });
 
 // ambil elemen
 const nama = document.getElementById("nama");
@@ -259,6 +260,7 @@ const jenis_barang = document.getElementById("jenis_barang");
 const setuju = document.getElementById("setuju");
 const btnKirim = document.getElementById("btnKirim");
 const hasil = document.getElementById("hasil");
+const tanggal = new Date().toLocaleDateString("id-ID");
 
 // event klik tombol
 btnKirim.addEventListener("click", function() {
@@ -282,7 +284,7 @@ if (isSubmitting) return;
   btnKirim.disabled = true;
   btnKirim.innerText = "Mengirim...";
 
-  fetch("https://script.google.com/macros/s/AKfycbzmDRxINYnV1vJdqNZpkx7-l4ZYmv_tFojXCec1tz1z66MOv2QLCU5HBshh31yVijjCEw/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwWlVGXNImM0C0dFfig_kf-zGPnf2nf6CP9AKZ97SPVJT8UrbXFhTGKuhTePobxmsn0qA/exec", {
     method: "POST",
     body: JSON.stringify({
       nama: nama.value,
@@ -305,10 +307,55 @@ if (isSubmitting) return;
       hasil.style.color = "red";
 
     } else if (data.status === "ok") {
-      hasil.innerHTML =
-        "✅ Nomor Antrian Anda: <b>" + data.nomor + "</b><br><br>" +
-        "Silakan screenshot sebagai bukti antrian.<br><br>" +
-        "<button id='btnBack'>Kembali ke Home</button>";
+      hasil.innerHTML = "
+<div style="
+  margin-top:15px;
+  padding:20px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#f8fbff,#eef5ff);
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  text-align:center;
+  position:relative;
+">
+
+  <h3 style="margin:0;color:#1e3a8a;">🎫 Tiket Kunjungan</h3>
+
+  <div style="border-top:1px dashed #ccc;margin:12px 0;"></div>
+
+  <p style="margin:5px 0;"><b>Nama</b><br>${nama.value}</p>
+  <p style="margin:5px 0;"><b>Warga Binaan</b><br>${warga.value}</p>
+  <p style="margin:5px 0;"><b>Tanggal</b><br>${tanggal}</p>
+  <p><b>Hari</b><br>${hari}</p>
+
+  <div style="
+    font-size:36px;
+    font-weight:bold;
+    color:#2563eb;
+    margin:15px 0;
+  ">
+    A-${data.nomor}
+  </div>
+
+  <div style="border-top:1px dashed #ccc;margin:12px 0;"></div>
+
+  <p style="font-size:12px;color:#6b7280;">
+    📸 Screenshot sebagai bukti antrian
+  </p>
+
+  <button onclick="window.location.href='https://sites.google.com/view/layanan-terpadu-lakusim/home'"
+    style="
+    margin-top:10px;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#4facfe,#2a7cff);
+    color:white;
+    width:100%;
+  ">
+    Kembali ke Home
+  </button>
+
+</div>
 
       hasil.style.color = "green";
 

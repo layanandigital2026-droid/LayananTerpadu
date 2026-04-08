@@ -213,61 +213,60 @@ button {
 
   </div>
 
+
 </div>
-  
-</div>
-  
 
 <script>
+const barang = document.getElementById("barang");
+const jenis = document.getElementById("jenis_barang");
+
+function toggleBarang() {
+  if (barang.value === "Tidak") {
+    jenis.disabled = true;
+    jenis.value = ""; // reset pilihan
+  } else {
+    jenis.disabled = false;
+  }
+}
+
+// event saat berubah
+barang.addEventListener("change", toggleBarang);
+
+// jalankan saat pertama load
+document.addEventListener("DOMContentLoaded", toggleBarang);
+</script>
+
+  <!--button onclick="kirim()">Kirim</button-->
+  <!--button id="btnKirim" onclick="kirim()">Kirim</button-->
+  <!--button id="btnKirim">Kirim</button-->
+
+</div>
+  <script>
 document.addEventListener("DOMContentLoaded", function() {
 
 let isSubmitting = false;
-let hari = new Date().toLocaleDateString("id-ID", { weekday: 'long' });
 
-// ambil semua elemen
+// ambil elemen
 const nama = document.getElementById("nama");
 const nik = document.getElementById("nik");
 const wa = document.getElementById("wa");
 const warga = document.getElementById("warga");
 const alamat = document.getElementById("alamat");
+const tanggal = document.getElementById("tanggal");
 const hubungan = document.getElementById("hubungan");
 const barang = document.getElementById("barang");
 const jenis_barang = document.getElementById("jenis_barang");
 const setuju = document.getElementById("setuju");
 const btnKirim = document.getElementById("btnKirim");
 const hasil = document.getElementById("hasil");
-const inputTanggal = document.getElementById("tanggal");
 
-
-// ===== DEBUG =====
-console.log("Script aktif");
-console.log(btnKirim);
-// =================
-
-
-// toggle barang
-function toggleBarang() {
-  if (barang.value === "Tidak") {
-    jenis_barang.disabled = true;
-    jenis_barang.value = "";
-  } else {
-    jenis_barang.disabled = false;
-  }
-}
-barang.addEventListener("change", toggleBarang);
-toggleBarang();
-
-
-// klik tombol
+// event klik tombol
 btnKirim.addEventListener("click", function() {
-
-  console.log("Klik terdeteksi");
-
-  if (isSubmitting) return;
-
+if (isSubmitting) return;
+  // validasi form
   if (
     !nama.value || !nik.value || !wa.value || 
-    !warga.value || !alamat.value || !inputTanggal.value || !hubungan.value
+    !warga.value || !alamat.value || !tanggal.value || !hubungan.value
   ) {
     alert("Harap isi semua data wajib!");
     return;
@@ -279,21 +278,19 @@ btnKirim.addEventListener("click", function() {
   }
 
   isSubmitting = true;
+
   btnKirim.disabled = true;
   btnKirim.innerText = "Mengirim...";
 
-  fetch("https://script.google.com/macros/s/AKfycbzmDRxINYnV1vJdqNZpkx7-l4ZYmv_tFojXCec1tz1z66MOv2QLCU5HBshh31yVijjCEw/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwWlVGXNImM0C0dFfig_kf-zGPnf2nf6CP9AKZ97SPVJT8UrbXFhTGKuhTePobxmsn0qA/exec", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
     body: JSON.stringify({
       nama: nama.value,
       nik: nik.value,
       wa: wa.value,
       warga: warga.value,
       alamat: alamat.value,
-      tanggal: inputTanggal.value,
+      tanggal: tanggal.value,
       hubungan: hubungan.value,
       barang: barang.value,
       jenis_barang: jenis_barang.value
@@ -302,59 +299,30 @@ btnKirim.addEventListener("click", function() {
   .then(res => res.json())
   .then(data => {
 
+    // ❌ kuota penuh (termasuk Jumat max 10 dari backend)
     if (data.status === "full") {
       hasil.innerHTML = "❌ Kuota hari ini sudah penuh";
       hasil.style.color = "red";
 
     } else if (data.status === "ok") {
-
-      hasil.innerHTML = `
-<div style="
-  margin-top:15px;
-  padding:20px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#f8fbff,#eef5ff);
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  text-align:center;
-">
-
-  <h3 style="margin:0;color:#1e3a8a;">🎫 Tiket Kunjungan</h3>
-
-  <div style="border-top:1px dashed #ccc;margin:12px 0;"></div>
-
-  <p><b>Nama</b><br>${nama.value}</p>
-  <p><b>Warga Binaan</b><br>${warga.value}</p>
-  <p><b>Tanggal</b><br>${inputTanggal.value}</p>
-  <p><b>Hari</b><br>${hari}</p>
-
-  <div style="
-    font-size:36px;
-    font-weight:bold;
-    color:#2563eb;
-    margin:15px 0;
-  ">
-    A-${data.nomor}
-  </div>
-
-  <div style="border-top:1px dashed #ccc;margin:12px 0;"></div>
-
-  <p style="font-size:12px;color:#6b7280;">
-    📸 Screenshot sebagai bukti antrian
-  </p>
-
-</div>
-      `;
+      hasil.innerHTML =
+        "✅ Nomor Antrian Anda: <b>" + data.nomor + "</b><br><br>" +
+        "Silakan screenshot sebagai bukti antrian.<br><br>" +
+        "<button id='btnBack'>Kembali ke Home</button>";
 
       hasil.style.color = "green";
-    }
 
+      document.getElementById("btnBack").onclick = function() {
+        window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/home";
+      };
+    }
+    
     isSubmitting = false;
     btnKirim.disabled = false;
     btnKirim.innerText = "Kirim";
 
   })
-  .catch(err => {
-    console.error(err);
+  .catch(() => {
     hasil.innerHTML = "❌ Gagal kirim";
     hasil.style.color = "red";
 
@@ -362,12 +330,10 @@ btnKirim.addEventListener("click", function() {
     btnKirim.disabled = false;
     btnKirim.innerText = "Kirim";
   });
-
 });
 
 });
-</script>
-  
+</script> 
  <div class="footer">
   © 2026 Layanan Terpadu
   dibuat dengan ❤️ untuk kemudahan pelayanan

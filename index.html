@@ -305,12 +305,34 @@ if (isSubmitting) return;
       hasil.style.color = "red";
 
     } else if (data.status === "ok") {
-      hasil.innerHTML =
-        "✅ Nomor Antrian Anda: <b>" + data.nomor + "</b><br><br>" +
-        "Silakan screenshot sebagai bukti antrian.<br><br>" +
-        "<button id='btnBack'>Kembali ke Home</button>";
+      const nomorAntrian = "A-" + data.nomor;
 
-      hasil.style.color = "green";
+hasil.innerHTML =
+  "<div style='margin-top:15px;padding:20px;border-radius:18px;background:linear-gradient(135deg,#f8fbff,#eef5ff);box-shadow:0 10px 25px rgba(0,0,0,0.08);text-align:center;'>" +
+
+  "<h3 style='margin:0;color:#1e3a8a;'>🎫 Tiket Kunjungan</h3>" +
+
+  "<div style='border-top:1px dashed #ccc;margin:12px 0;'></div>" +
+
+  "<p><b>Nama</b><br>" + nama.value + "</p>" +
+  "<p><b>Warga Binaan</b><br>" + warga.value + "</p>" +
+  "<p><b>Tanggal</b><br>" + tanggal.value + "</p>" +
+
+  "<div style='font-size:38px;font-weight:bold;color:#2563eb;margin:15px 0;'>" +
+  nomorAntrian +
+  "</div>" +
+
+  "<img src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + nomorAntrian + "' style='margin-top:10px;'/>" +
+
+  "<div style='border-top:1px dashed #ccc;margin:12px 0;'></div>" +
+
+  "<p style='font-size:12px;color:#6b7280;'>📸 Screenshot sebagai bukti</p>" +
+
+  "<button onclick='window.print()' style='margin-top:8px;padding:10px;border:none;border-radius:10px;background:#10b981;color:white;width:100%;'>🖨 Cetak</button>" +
+
+  "<button id='btnBack' style='margin-top:10px;padding:10px;border:none;border-radius:10px;background:#3b82f6;color:white;width:100%;'>Kembali ke Home</button>" +
+
+  "</div>";
 
       document.getElementById("btnBack").onclick = function() {
         window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/home";

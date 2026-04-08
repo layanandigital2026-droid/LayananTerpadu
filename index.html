@@ -215,19 +215,7 @@ button {
 
 
 </div>
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<script>
-function downloadTiket() {
-  const tiket = document.getElementById("tiket");
 
-  html2canvas(tiket).then(canvas => {
-    const link = document.createElement("a");
-    link.download = "tiket-kunjungan.png";
-    link.href = canvas.toDataURL();
-    link.click();
-  });
-}
-</script>
 <script>
 const barang = document.getElementById("barang");
 const jenis = document.getElementById("jenis_barang");
@@ -253,6 +241,19 @@ document.addEventListener("DOMContentLoaded", toggleBarang);
   <!--button id="btnKirim">Kirim</button-->
 
 </div>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+function downloadTiket() {
+  const tiket = document.getElementById("tiket");
+
+  html2canvas(tiket).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "tiket-kunjungan.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
+</script>
   <script>
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -369,7 +370,7 @@ hasil.innerHTML =
 });
 
 });
-</script> 
+</script>
  <div class="footer">
   © 2026 Layanan Terpadu
   dibuat dengan ❤️ untuk kemudahan pelayanan

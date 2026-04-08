@@ -217,31 +217,6 @@ button {
 </div>
 
 <script>
-const barang = document.getElementById("barang");
-const jenis = document.getElementById("jenis_barang");
-
-function toggleBarang() {
-  if (barang.value === "Tidak") {
-    jenis.disabled = true;
-    jenis.value = ""; // reset pilihan
-  } else {
-    jenis.disabled = false;
-  }
-}
-
-// event saat berubah
-barang.addEventListener("change", toggleBarang);
-
-// jalankan saat pertama load
-document.addEventListener("DOMContentLoaded", toggleBarang);
-</script>
-
-  <!--button onclick="kirim()">Kirim</button-->
-  <!--button id="btnKirim" onclick="kirim()">Kirim</button-->
-  <!--button id="btnKirim">Kirim</button-->
-
-</div>
-  <script>
 document.addEventListener("DOMContentLoaded", function() {
 
 let isSubmitting = false;
@@ -253,22 +228,23 @@ const nik = document.getElementById("nik");
 const wa = document.getElementById("wa");
 const warga = document.getElementById("warga");
 const alamat = document.getElementById("alamat");
-const tanggal = document.getElementById("tanggal");
+const inputTanggal = document.getElementById("tanggal");
 const hubungan = document.getElementById("hubungan");
 const barang = document.getElementById("barang");
 const jenis_barang = document.getElementById("jenis_barang");
 const setuju = document.getElementById("setuju");
 const btnKirim = document.getElementById("btnKirim");
 const hasil = document.getElementById("hasil");
-const tanggal = new Date().toLocaleDateString("id-ID");
 
-// event klik tombol
+// tombol kirim
 btnKirim.addEventListener("click", function() {
-if (isSubmitting) return;
-  // validasi form
+
+  if (isSubmitting) return;
+
+  // validasi
   if (
     !nama.value || !nik.value || !wa.value || 
-    !warga.value || !alamat.value || !tanggal.value || !hubungan.value
+    !warga.value || !alamat.value || !inputTanggal.value || !hubungan.value
   ) {
     alert("Harap isi semua data wajib!");
     return;
@@ -280,7 +256,6 @@ if (isSubmitting) return;
   }
 
   isSubmitting = true;
-
   btnKirim.disabled = true;
   btnKirim.innerText = "Mengirim...";
 
@@ -292,7 +267,7 @@ if (isSubmitting) return;
       wa: wa.value,
       warga: warga.value,
       alamat: alamat.value,
-      tanggal: tanggal.value,
+      tanggal: inputTanggal.value,
       hubungan: hubungan.value,
       barang: barang.value,
       jenis_barang: jenis_barang.value
@@ -301,69 +276,83 @@ if (isSubmitting) return;
   .then(res => res.json())
   .then(data => {
 
-    // ❌ kuota penuh (termasuk Jumat max 10 dari backend)
     if (data.status === "full") {
       hasil.innerHTML = "❌ Kuota hari ini sudah penuh";
       hasil.style.color = "red";
 
     } else if (data.status === "ok") {
-      hasil.innerHTML = "
-<div style="
-  margin-top:15px;
-  padding:20px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#f8fbff,#eef5ff);
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  text-align:center;
-  position:relative;
-">
 
-  <h3 style="margin:0;color:#1e3a8a;">🎫 Tiket Kunjungan</h3>
+      const nomorAntrian = "A-" + data.nomor;
 
-  <div style="border-top:1px dashed #ccc;margin:12px 0;"></div>
+      hasil.innerHTML = `
+      <div style="
+        margin-top:15px;
+        padding:20px;
+        border-radius:18px;
+        background:linear-gradient(135deg,#f8fbff,#eef5ff);
+        box-shadow:0 10px 25px rgba(0,0,0,0.08);
+        text-align:center;
+      ">
 
-  <p style="margin:5px 0;"><b>Nama</b><br>${nama.value}</p>
-  <p style="margin:5px 0;"><b>Warga Binaan</b><br>${warga.value}</p>
-  <p style="margin:5px 0;"><b>Tanggal</b><br>${tanggal}</p>
-  <p><b>Hari</b><br>${hari}</p>
+        <h3 style="margin:0;color:#1e3a8a;">🎫 Tiket Kunjungan</h3>
 
-  <div style="
-    font-size:36px;
-    font-weight:bold;
-    color:#2563eb;
-    margin:15px 0;
-  ">
-    A-${data.nomor}
-  </div>
+        <div style="border-top:1px dashed #ccc;margin:12px 0;"></div>
 
-  <div style="border-top:1px dashed #ccc;margin:12px 0;"></div>
+        <p><b>Nama</b><br>${nama.value}</p>
+        <p><b>Warga Binaan</b><br>${warga.value}</p>
+        <p><b>Tanggal</b><br>${inputTanggal.value}</p>
+        <p><b>Hari</b><br>${hari}</p>
 
-  <p style="font-size:12px;color:#6b7280;">
-    📸 Screenshot sebagai bukti antrian
-  </p>
+        <div style="
+          font-size:38px;
+          font-weight:bold;
+          color:#2563eb;
+          margin:15px 0;
+        ">
+          ${nomorAntrian}
+        </div>
 
-  <button onclick="window.location.href='https://sites.google.com/view/layanan-terpadu-lakusim/home'"
-    style="
-    margin-top:10px;
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    background:linear-gradient(135deg,#4facfe,#2a7cff);
-    color:white;
-    width:100%;
-  ">
-    Kembali ke Home
-  </button>
+        <img 
+          src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${nomorAntrian}"
+          style="margin-top:10px;"
+        />
 
-</div>
+        <div style="border-top:1px dashed #ccc;margin:12px 0;"></div>
+
+        <p style="font-size:12px;color:#6b7280;">
+          📸 Screenshot atau simpan tiket ini sebagai bukti
+        </p>
+
+        <button onclick="window.print()" style="
+          margin-top:8px;
+          padding:10px;
+          border:none;
+          border-radius:10px;
+          background:#10b981;
+          color:white;
+          width:100%;
+        ">
+          🖨 Cetak / Simpan Tiket
+        </button>
+
+        <button onclick="window.location.href='https://sites.google.com/view/layanan-terpadu-lakusim/home'" style="
+          margin-top:10px;
+          padding:10px;
+          border:none;
+          border-radius:10px;
+          background:linear-gradient(135deg,#4facfe,#2a7cff);
+          color:white;
+          width:100%;
+        ">
+          Kembali ke Home
+        </button>
+
+      </div>
+      `;
 
       hasil.style.color = "green";
-
-      document.getElementById("btnBack").onclick = function() {
-        window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/home";
-      };
     }
-    
+
     isSubmitting = false;
     btnKirim.disabled = false;
     btnKirim.innerText = "Kirim";
@@ -377,10 +366,10 @@ if (isSubmitting) return;
     btnKirim.disabled = false;
     btnKirim.innerText = "Kirim";
   });
-});
 
 });
-</script> 
+});
+</script>
  <div class="footer">
   © 2026 Layanan Terpadu
   dibuat dengan ❤️ untuk kemudahan pelayanan

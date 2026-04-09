@@ -126,6 +126,10 @@ button {
   background: #f1f6ff;
   text-align: center;
 }
+  @keyframes fadeIn {
+  from {opacity:0; transform:translateY(5px);}
+  to {opacity:1; transform:translateY(0);}
+  }
 
 /* FOOTER */
 .footer {
@@ -260,17 +264,53 @@ const setuju = document.getElementById("setuju");
 const btnKirim = document.getElementById("btnKirim");
 const hasil = document.getElementById("hasil");
 
+  function showAlert(pesan, warna = "red") {
+  const hasil = document.getElementById("hasil");
+
+  hasil.innerHTML = `
+    <div style="
+      padding:14px;
+      border-radius:12px;
+      background:${warna === "red" ? "#fee2e2" : "#dcfce7"};
+      color:${warna === "red" ? "#b91c1c" : "#166534"};
+      font-weight:500;
+      box-shadow:0 6px 15px rgba(0,0,0,0.08);
+      animation:fadeIn 0.3s ease;
+    ">
+      ${pesan}
+    </div>
+  `;
+    }
 // event klik tombol
 btnKirim.addEventListener("click", function() {
 if (isSubmitting) return;
   // validasi form
-  if (
-    !nama.value || !nik.value || !wa.value || 
-    !warga.value || !alamat.value || !tanggal.value || !hubungan.value
-  ) {
-    alert("Harap isi semua data wajib!");
-    return;
-  }
+  // VALIDASI KOSONG
+if (
+  !nama.value || !nik.value || !wa.value || 
+  !warga.value || !alamat.value || !tanggal.value || !hubungan.value
+) {
+  showAlert("⚠️ Semua data wajib diisi ya!", "red");
+  return;
+}
+
+// VALIDASI NIK (harus 16 digit angka)
+if (!/^\d{16}$/.test(nik.value)) {
+  showAlert("❌ NIK harus 16 digit angka!", "red");
+  return;
+}
+
+// VALIDASI NO HP (maks 14 digit angka)
+if (!/^\d{10,14}$/.test(wa.value)) {
+  showAlert("❌ Nomor HP harus angka dan maksimal 14 digit!", "red");
+  return;
+}
+
+// VALIDASI CHECKBOX
+if (!setuju.checked) {
+  showAlert("⚠️ Anda harus menyetujui peraturan!", "red");
+  return;
+}
 
   if (!setuju.checked) {
     alert("Anda harus menyetujui peraturan!");

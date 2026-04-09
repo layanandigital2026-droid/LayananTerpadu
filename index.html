@@ -339,9 +339,12 @@ hasil.innerHTML =
       };
     }
     
-    isSubmitting = false;
-    btnKirim.disabled = false;
-    btnKirim.innerText = "Kirim";
+   // isSubmitting = false;
+   // btnKirim.disabled = false;
+    //btnKirim.innerText = "Kirim";
+    // ❗ PENTING: biarkan tombol tetap mati
+    btnKirim.innerText = "✔ Sudah Terdaftar";
+    btnKirim.disabled = true;
 
   })
   .catch(() => {

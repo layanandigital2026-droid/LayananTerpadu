@@ -303,7 +303,11 @@ if (isSubmitting) return;
     if (data.status === "full") {
       hasil.innerHTML = "❌ Kuota hari ini sudah penuh";
       hasil.style.color = "red";
-
+  
+    } else if (data.status === "duplicate") {
+    hasil.innerHTML = "❌ Anda sudah mengambil antrian hari ini";
+    hasil.style.color = "red";
+  
     } else if (data.status === "ok") {
       const nomorAntrian = data.nomor;
 

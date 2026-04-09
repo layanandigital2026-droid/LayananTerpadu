@@ -322,19 +322,31 @@ hasil.innerHTML =
   nomorAntrian +
   "</div>" +
 
-  "<img src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + nomorAntrian + "' style='margin-top:10px;'/>" +
+//"<img src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + nomorAntrian + "' style='margin-top:10px;'/>" +
+  "<img id='qrImg' src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + nomorAntrian + "' style='margin-top:10px;'/>" +
 
   "<div style='border-top:1px dashed #ccc;margin:12px 0;'></div>" +
 
   "<p style='font-size:12px;color:#6b7280;'>📸 Screenshot sebagai bukti</p>" +
 
-  "<button onclick='window.print()' style='margin-top:8px;padding:10px;border:none;border-radius:10px;background:#10b981;color:white;width:100%;'>🖨 Cetak</button>" +
-
+//"<button onclick='window.print()' style='margin-top:8px;padding:10px;border:none;border-radius:10px;background:#10b981;color:white;width:100%;'>🖨 Cetak</button>" +
+  "<button id='btnDownloadQR' style='margin-top:8px;padding:10px;border:none;border-radius:10px;background:#10b981;color:white;width:100%;'>⬇️ Download QR</button>" +
   "<button id='btnBack' style='margin-top:10px;padding:10px;border:none;border-radius:10px;background:#3b82f6;color:white;width:100%;'>Kembali ke Home</button>" +
 
   "</div>";
 
       document.getElementById("btnBack").onclick = function() {
+        // tombol download QR
+        document.getElementById("btnDownloadQR").onclick = function() {
+        const qr = document.getElementById("qrImg").src;
+
+        const a = document.createElement("a");
+        a.href = qr;
+        a.download = "QR_Kunjungan_" + nomorAntrian + ".png";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+       };
         window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/home";
       };
     }

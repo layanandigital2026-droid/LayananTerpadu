@@ -338,17 +338,50 @@ hasil.innerHTML =
       document.getElementById("btnBack").onclick = function() {
         // tombol download QR
         document.getElementById("btnDownloadQR").onclick = function() {
-        const qr = document.getElementById("qrImg").src;
+         const qrUrl = document.getElementById("qrImg").src;
 
-        const a = document.createElement("a");
-        a.href = qr;
-        a.download = "QR_Kunjungan_" + nomorAntrian + ".png";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-       };
+        fetch(qrUrl)
+          .then(res => res.blob())
+          .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "QR_Kunjungan_" + nomorAntrian + ".png";
+            document.body.appendChild(a);
+            a.click();
+
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+          });
+        };
         window.location.href = "https://sites.google.com/view/layanan-terpadu-lakusim/home";
       };
+      // ⬇️ LETAKKAN DI SINI
+setTimeout(() => {
+  const btnDownload = document.getElementById("btnDownloadQR");
+
+  if (btnDownload) {
+    btnDownload.onclick = function() {
+      const qrUrl = document.getElementById("qrImg").src;
+
+      fetch(qrUrl)
+        .then(res => res.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "QR_Kunjungan_" + nomorAntrian + ".png";
+          document.body.appendChild(a);
+          a.click();
+
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        });
+    };
+  }
+}, 200);
     }
     
    // isSubmitting = false;

@@ -305,8 +305,15 @@ if (isSubmitting) return;
       hasil.style.color = "red";
   
     } else if (data.status === "duplicate") {
-    hasil.innerHTML = "❌ Anda sudah mengambil antrian hari ini";
-    hasil.style.color = "red";
+       hasil.innerHTML = `
+        ❌ Anda sudah mengambil antrian hari ini <br><br>
+        <button onclick="goHome()" style="padding:10px;border:none;border-radius:10px;background:#3b82f6;color:white;width:100%;">
+          Kembali ke Home
+        </button>
+      `;
+      hasil.style.color = "red";
+    
+      resetButton();
   
     } else if (data.status === "ok") {
       const nomorAntrian = data.nomor;

@@ -361,10 +361,10 @@ if (!setuju.checked) {
 
 // ✅ TAMBAHKAN DI SINI (DI LUAR HTML STRING)
 const qrData = 
-  "Nomor: " + nomorAntrian + "\n" +
-  "Nama: " + nama.value + "\n" +
-  "Nama Warga Binaan: " + warga.value + "\n" +
-  "Tanggal: " + tanggal.value;
+  "Nomor: " + nomorAntrian +
+  "%0A Nama: " + nama.value +
+  "%0A Warga Binaan: " + warga.value +
+  "%0A Tanggal: " + tanggal.value;
 
 const qrEncoded = encodeURIComponent(qrData);
 

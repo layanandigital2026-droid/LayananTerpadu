@@ -367,7 +367,7 @@ else {
   btnKirim.disabled = true;
   btnKirim.innerText = "Mengirim...";
 
-  fetch("https://script.google.com/macros/s/AKfycbxnT8D_vqfvUO1v_Scx2q7ziOpKDhv5duP-ejGwfkNZA55hFvqeht_iQbJDHylztcVivA/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbzzTVWC6t9owiBTZvqkoeoMfyJ97c68GZwl1EEobulBPVruP_yrWG-Y6kRalgweBqqk_Q/exec", {
     method: "POST",
     body: JSON.stringify({
       nama: nama.value,
@@ -384,31 +384,30 @@ else {
   .then(res => res.json())
   .then(data => {
 
-    // ❌ kuota penuh (termasuk Jumat max 10 dari backend)
-    if (data.status === "full") {
-      hasil.innerHTML = "❌ Kuota hari ini sudah penuh";
-      hasil.style.color = "red";
-  
-    } else if (data.status === "duplicate") {
-       hasil.innerHTML = `
-        ❌ Anda sudah mengambil antrian hari ini <br><br>
-        <button onclick="goHome()" style="padding:10px;border:none;border-radius:10px;background:#3b82f6;color:white;width:100%;">
-          Kembali ke Home
-        </button>
-      `;
-      hasil.style.color = "red";
-    
-      resetButton();
-  
-    } else if (data.status === "ok") {
-      //const nomorAntrian = data.nomor;
-      const nomorAntrian = data.nomor;
-    else if (data.status === "libur") {
-  hasil.innerHTML = "❌ Hari Sabtu & Minggu tidak melayani kunjungan";
-  hasil.style.color = "red";
+  if (data.status === "full") {
+    hasil.innerHTML = "❌ Kuota hari ini sudah penuh";
+    hasil.style.color = "red";
 
-  resetButton();
-}
+  } else if (data.status === "duplicate") {
+    hasil.innerHTML = `
+      ❌ Anda sudah mengambil antrian hari ini <br><br>
+      <button onclick="goHome()" style="padding:10px;border:none;border-radius:10px;background:#3b82f6;color:white;width:100%;">
+        Kembali ke Home
+      </button>
+    `;
+    hasil.style.color = "red";
+    resetButton();
+
+  } else if (data.status === "libur") {
+    hasil.innerHTML = "❌ Hari Sabtu & Minggu tidak melayani kunjungan";
+    hasil.style.color = "red";
+    resetButton();
+
+  } else if (data.status === "ok") {
+
+    const nomorAntrian = data.nomor;
+
+    // lanjut QR dll di sini...
 
 // ✅ TAMBAHKAN DI SINI (DI LUAR HTML STRING)
 const qrData = 

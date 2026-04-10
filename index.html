@@ -344,7 +344,7 @@ const hariSekarang = waktuWIB.getDay();
 
 // Jumat 
 if (hariSekarang === 5) {
-  if (jam < 8 || jam >= 17) {
+  if (jam < 8 || jam >= 10) {
     showAlert("❌ Hari ini (Jumat) hanya jam 08:00 - 10:00", "red");
     return;
   }

@@ -318,37 +318,48 @@ if (!setuju.checked) {
     return;
   }
 
-  // ⏰ VALIDASI HARI & JAM
+  
+// ⏰ VALIDASI HARI & JAM
+
 const now = new Date();
 const waktuWIB = new Date(
   now.toLocaleString("en-US", { timeZone: "Asia/Jakarta" })
 );
 
+// jam dari waktu sekarang
 const jam = waktuWIB.getHours();
 
-// ambil hari dari tanggal yang dipilih user
+// hari dari tanggal yang dipilih user
 const tanggalInput = new Date(tanggal.value);
 const hari = tanggalInput.getDay();
 
-// ❌ Sabtu (6) & Minggu (0) tutup
+// ❌ Sabtu & Minggu (berdasarkan tanggal yang dipilih)
 if (hari === 0 || hari === 6) {
-  showAlert("❌ Pengambilan antrian hanya Senin - Jumat", "red");
+  showAlert("❌ Tidak bisa ambil antrian untuk Sabtu/Minggu", "red");
   return;
 }
 
-// ❌ Jumat (5) hanya jam 8 - 10
-if (hari === 5) {
+// ❌ Validasi jam (berdasarkan hari SEKARANG)
+const hariSekarang = waktuWIB.getDay();
+
+// Jumat sekarang
+if (hariSekarang === 5) {
   if (jam < 8 || jam >= 10) {
-    showAlert("❌ Jumat hanya bisa ambil antrian jam 08:00 - 10:00", "red");
+    showAlert("❌ Hari ini (Jumat) hanya jam 08:00 - 10:00", "red");
     return;
   }
 } 
-// ❌ Senin - Kamis (1-4) jam 8 - 12
-else {
+// Senin - Kamis sekarang
+else if (hariSekarang >= 1 && hariSekarang <= 4) {
   if (jam < 8 || jam >= 12) {
-    showAlert("❌ Senin - Kamis hanya jam 08:00 - 12:00", "red");
+    showAlert("❌ Hari ini hanya jam 08:00 - 12:00", "red");
     return;
   }
+}
+// Sabtu/Minggu sekarang
+else {
+  showAlert("❌ Hari ini tidak melayani pengambilan antrian", "red");
+  return;
 }
 
   isSubmitting = true;

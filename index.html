@@ -403,6 +403,12 @@ else {
     } else if (data.status === "ok") {
       //const nomorAntrian = data.nomor;
       const nomorAntrian = data.nomor;
+    else if (data.status === "libur") {
+  hasil.innerHTML = "❌ Hari Sabtu & Minggu tidak melayani kunjungan";
+  hasil.style.color = "red";
+
+  resetButton();
+}
 
 // ✅ TAMBAHKAN DI SINI (DI LUAR HTML STRING)
 const qrData = 

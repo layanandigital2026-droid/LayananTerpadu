@@ -281,8 +281,42 @@ const hasil = document.getElementById("hasil");
     </div>
   `;
     }
+  
+if (!cekJadwalDanKuota()) return;
 // event klik tombol
 btnKirim.addEventListener("click", function() {
+  function cekJadwalDanKuota() {
+  const now = new Date();
+
+  const hari = now.getDay(); 
+  // 0 = Minggu, 1 = Senin, ..., 6 = Sabtu
+
+  const jam = now.getHours();
+
+  // ❌ Sabtu & Minggu tidak boleh
+  if (hari === 0 || hari === 6) {
+    showAlert("❌ Pengambilan antrian hanya Senin - Jumat", "red");
+    return false;
+  }
+
+  // ⏰ Senin - Kamis (1-4)
+  if (hari >= 1 && hari <= 4) {
+    if (jam < 8 || jam >= 12) {
+      showAlert("⏰ Senin-Kamis hanya jam 08.00 - 12.00", "red");
+      return false;
+    }
+  }
+
+  // ⏰ Jumat (5)
+  if (hari === 5) {
+    if (jam < 8 || jam >= 10) {
+      showAlert("⏰ Jumat hanya jam 08.00 - 10.00", "red");
+      return false;
+    }
+  }
+
+  return true;
+  }
 if (isSubmitting) return;
   // validasi form
   // VALIDASI KOSONG

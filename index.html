@@ -383,7 +383,16 @@ hasil.innerHTML =
   "</div>" +
 
 //"<img src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + nomorAntrian + "' style='margin-top:10px;'/>" +
-  "<img id='qrImg' src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + nomorAntrian + "' style='margin-top:10px;'/>" +
+ // "<img id='qrImg' src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + nomorAntrian + "' style='margin-top:10px;'/>" +
+  const qrData = 
+  "Nomor: " + nomorAntrian + "\n" +
+  "Nama: " + nama.value + "\n" +
+  "Warga Binaan: " + warga.value + "\n" +
+  "Tanggal: " + tanggal.value;
+
+const qrEncoded = encodeURIComponent(qrData);
+
+"<img id='qrImg' src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + qrEncoded + "' style='margin-top:10px;'/>"
 
   "<div style='border-top:1px dashed #ccc;margin:12px 0;'></div>" +
 

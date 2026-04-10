@@ -361,12 +361,14 @@ if (!setuju.checked) {
 
 // ✅ TAMBAHKAN DI SINI (DI LUAR HTML STRING)
 const qrData = 
-  "Nomor: " + nomorAntrian +
-  "%0A Nama: " + nama.value +
-  "%0A Warga Binaan: " + warga.value +
-  "%0A Tanggal: " + tanggal.value;
+  "Nomor: " + nomorAntrian + "\n" +
+  "Nama: " + nama.value + "\n" +
+  "Warga Binaan: " + warga.value + "\n" +
+  "Tanggal: " + tanggal.value;
 
 const qrEncoded = encodeURIComponent(qrData);
+
+//const qrEncoded = encodeURIComponent(qrData);
 
 hasil.innerHTML =
   "<div style='margin-top:15px;padding:20px;border-radius:18px;background:linear-gradient(135deg,#f8fbff,#eef5ff);box-shadow:0 10px 25px rgba(0,0,0,0.08);text-align:center;'>" +
@@ -395,8 +397,8 @@ hasil.innerHTML =
 //"<img src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + nomorAntrian + "' style='margin-top:10px;'/>" +
 //"<img id='qrImg' src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + nomorAntrian + "' style='margin-top:10px;'/>" +
 //"<img id='qrImg' src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + qrEncoded + "' style='margin-top:10px;'/>" +
-  "<img id='qrImg' src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + qrData + "' style='margin-top:10px;'/>"
-
+// "<img id='qrImg' src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + qrData + "' style='margin-top:10px;'/>"
+   "<img id='qrImg' src='https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" + qrEncoded + "' style='margin-top:10px;'/>"
   "<div style='border-top:1px dashed #ccc;margin:12px 0;'></div>" +
 
   "<p style='font-size:12px;color:#6b7280;'>📸 Screenshot sebagai bukti</p>" +

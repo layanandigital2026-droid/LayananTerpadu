@@ -318,6 +318,32 @@ if (!setuju.checked) {
     return;
   }
 
+  // ⏰ VALIDASI HARI & JAM
+const now = new Date();
+const hari = now.getDay(); // 0=minggu, 1=senin, dst
+const jam = now.getHours();
+
+// ❌ Sabtu (6) & Minggu (0) tutup
+if (hari === 0 || hari === 6) {
+  showAlert("❌ Pengambilan antrian hanya Senin - Jumat", "red");
+  return;
+}
+
+// ❌ Jumat (5) hanya jam 8 - 10
+if (hari === 5) {
+  if (jam < 8 || jam >= 10) {
+    showAlert("❌ Jumat hanya bisa ambil antrian jam 08:00 - 10:00", "red");
+    return;
+  }
+} 
+// ❌ Senin - Kamis (1-4) jam 8 - 12
+else {
+  if (jam < 8 || jam >= 12) {
+    showAlert("❌ Senin - Kamis hanya jam 08:00 - 12:00", "red");
+    return;
+  }
+}
+
   isSubmitting = true;
 
   btnKirim.disabled = true;

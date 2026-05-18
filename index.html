@@ -333,22 +333,17 @@ const jam = waktuWIB.getHours();
 const tanggalInput = new Date(tanggal.value);
 const hari = tanggalInput.getDay();
 
-// ❌ Sabtu & Minggu (berdasarkan tanggal yang dipilih)
-if (hari === 0 || hari === 6) {
-  showAlert("❌ Tidak bisa ambil antrian untuk Sabtu/Minggu", "red");
+// ❌ Jumat, Sabtu & Minggu libur
+// 5 = Jumat, 6 = Sabtu, 0 = Minggu
+if (hari === 5 || hari === 6 || hari === 0) {
+  showAlert("❌ Tidak bisa ambil antrian untuk Jumat/Sabtu/Minggu", "red");
   return;
 }
 
 // ❌ Validasi jam (berdasarkan hari SEKARANG)
 const hariSekarang = waktuWIB.getDay();
 
-// Jumat 
-if (hariSekarang === 5) {
-  if (jam < 8 || jam >= 10) {
-    showAlert("❌ Hari ini (Jumat) hanya jam 08:00 - 10:00", "red");
-    return;
-  }
-} 
+
 // Senin - Kamis sekarang
 else if (hariSekarang >= 1 && hariSekarang <= 4) {
   if (jam < 8 || jam >= 12) {

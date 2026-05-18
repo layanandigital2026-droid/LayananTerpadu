@@ -179,23 +179,10 @@ button {
       <input type="date" id="tanggal">
     </div>
 
-    <!--div class="form-group">
+    <div class="form-group">
       <label>Hubungan *</label>
       <input id="hubungan">
-  </div-->
-
-    <div class="form-group">
-    <label>Hubungan *</label>
-    <select id="hubungan">
-      <option value="">-- Pilih Hubungan --</option>
-      <option value="Keluarga Inti">Keluarga Inti</option>
-      <option value="Keluarga Besar">Keluarga Besar</option>
-      <option value="Teman">Teman</option>
-      <option value="Pengacara">Pengacara</option>
-      <option value="Wali">Wali</option>
-      <option value="Lainnya">Lainnya</option>
-    </select>
-  </div>
+    </div>
 
     <!-- SECTION BARANG -->
     <div class="section-title">Barang Bawaan</div>
@@ -346,20 +333,25 @@ const jam = waktuWIB.getHours();
 const tanggalInput = new Date(tanggal.value);
 const hari = tanggalInput.getDay();
 
-// ❌ Jumat, Sabtu & Minggu libur
-// 5 = Jumat, 6 = Sabtu, 0 = Minggu
-if (hari === 5 || hari === 6 || hari === 0) {
-  showAlert("❌ Tidak bisa ambil antrian untuk Jumat/Sabtu/Minggu", "red");
+// ❌ Sabtu & Minggu (berdasarkan tanggal yang dipilih)
+if (hari === 0 || hari === 6) {
+  showAlert("❌ Tidak bisa ambil antrian untuk Sabtu/Minggu", "red");
   return;
 }
 
 // ❌ Validasi jam (berdasarkan hari SEKARANG)
 const hariSekarang = waktuWIB.getDay();
 
-
+// Jumat 
+if (hariSekarang === 5) {
+  if (jam < 8 || jam >= 10) {
+    showAlert("❌ Hari ini (Jumat) hanya jam 08:00 - 10:00", "red");
+    return;
+  }
+} 
 // Senin - Kamis sekarang
 else if (hariSekarang >= 1 && hariSekarang <= 4) {
-  if (jam < 9 || jam >= 12) {
+  if (jam < 8 || jam >= 12) {
     showAlert("❌ Hari ini hanya jam 08:00 - 12:00", "red");
     return;
   }

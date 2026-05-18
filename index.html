@@ -346,30 +346,29 @@ const jam = waktuWIB.getHours();
 const tanggalInput = new Date(tanggal.value);
 const hari = tanggalInput.getDay();
 
-// ❌ Sabtu & Minggu (berdasarkan tanggal yang dipilih)
-if (hari === 0 || hari === 6) {
-  showAlert("❌ Tidak bisa ambil antrian untuk Sabtu/Minggu", "red");
+// ❌ Jumat, Sabtu, Minggu libur
+if (hari === 5 || hari === 6 || hari === 0) {
+  showAlert("❌ Jumat, Sabtu, dan Minggu tidak melayani kunjungan", "red");
   return;
 }
 
 // ❌ Validasi jam (berdasarkan hari SEKARANG)
 const hariSekarang = waktuWIB.getDay();
 
-// Jumat 
-if (hariSekarang === 5) {
-  if (jam < 8 || jam >= 10) {
-    showAlert("❌ Hari ini (Jumat) hanya jam 08:00 - 10:00", "red");
-    return;
-  }
-} 
 // Senin - Kamis sekarang
 else if (hariSekarang >= 1 && hariSekarang <= 4) {
-  if (jam < 8 || jam >= 12) {
-    showAlert("❌ Hari ini hanya jam 08:00 - 12:00", "red");
+
+  const menit = waktuWIB.getMinutes();
+  const totalMenit = (jam * 60) + menit;
+
+  // 09:00 = 540 menit
+  // 11:45 = 705 menit
+  if (totalMenit < 540 || totalMenit > 705) {
+    showAlert("❌ Hari ini hanya jam 09:00 - 11:45", "red");
     return;
   }
 }
-// Sabtu/Minggu sekarang
+// Jumat/Sabtu/Minggu sekarang
 else {
   showAlert("❌ Hari ini tidak melayani pengambilan antrian", "red");
   return;

@@ -342,16 +342,10 @@ if (hari === 0 || hari === 5  || hari === 6) {
 // ❌ Validasi jam (berdasarkan hari SEKARANG)
 const hariSekarang = waktuWIB.getDay();
 
-// Jumat 
-if (hariSekarang === 5) {
-  if (jam < 9 || jam >= 11) {
-    showAlert("❌ Hari ini (Jumat) hanya jam 09:00 - 11:00", "red");
-    return;
-  }
-} 
+
 // Senin - Kamis sekarang
 else if (hariSekarang >= 1 && hariSekarang <= 4) {
-  if (jam < 8 || jam >= 12) {
+  if (jam < 9 || jam >= 11) {
     showAlert("❌ Hari ini hanya jam 08:00 - 12:00", "red");
     return;
   }

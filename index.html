@@ -380,8 +380,8 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
     // VALIDASI HP
-    if(!/^\d{10,14}$/.test(wa.value)){
-      showAlert("❌ Nomor HP harus angka dan maksimal 14 digit!");
+    if(!/^\d{10,13}$/.test(wa.value)){
+      showAlert("❌ Nomor HP harus angka dan maksimal 13 digit!");
       return;
     }
 

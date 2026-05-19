@@ -368,7 +368,7 @@ else {
   btnKirim.disabled = true;
   btnKirim.innerText = "Mengirim...";
 
-  fetch("https://script.google.com/macros/s/AKfycbzq-flwvrX--dfjiAiVf8FSNZ1SgO8OLMmTRC3woEBenAjCBYNBU8BTrrvD3x7ZhGtV/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyDXNH4qc80vKEcrxqb9rmhhlPW4xuzJTdsJ0w06mBf_kDp9VhMTyAtWBrXGgIVqubcQQ/exec", {
     method: "POST",
     body: JSON.stringify({
       nama: nama.value,
@@ -399,10 +399,18 @@ else {
     hasil.style.color = "red";
     resetButton();
 
-  } else if (data.status === "libur") {
-    hasil.innerHTML = "❌ Hari Sabtu & Minggu tidak melayani kunjungan";
+  } 
+
+  else if (data.status === "tutup") {
+  
+    hasil.innerHTML =
+      "❌ Pengambilan antrian hanya Senin-Kamis pukul 09:00 - 11:45";
+  
     hasil.style.color = "red";
+  
     resetButton();
+  }
+
 
   } else if (data.status === "ok") {
 

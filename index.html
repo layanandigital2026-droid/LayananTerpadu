@@ -344,10 +344,16 @@ if (hari === 5 || hari === 6 || hari === 0) {
 const hariSekarang = waktuWIB.getDay();
 
 
-// Senin - Kamis sekarang
+// ✅ Senin - Kamis : 09:00 - 11:45
 if (hariSekarang >= 1 && hariSekarang <= 4) {
-  if (jam < 9 || jam >= 12) {
-    showAlert("❌ Hari ini hanya jam 09:00 - 12:00", "red");
+
+  const menit = waktuWIB.getMinutes();
+  const totalMenit = jam * 60 + menit;
+
+  // 09:00 = 540 menit
+  // 11:45 = 705 menit
+  if (totalMenit < 540 || totalMenit > 705) {
+    showAlert("❌ Pengambilan antrian hanya pukul 09:00 - 11:45", "red");
     return;
   }
 }

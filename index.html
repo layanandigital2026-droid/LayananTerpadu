@@ -142,6 +142,52 @@ button{
   }
 }
 
+.autocomplete-wrapper{
+  position: relative;
+  width: 100%;
+}
+
+#nama_wbp{
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #cfd8dc;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.suggestions{
+  position: fixed;
+  background: white;
+  width: calc(100% - 40px);
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 99999;
+  display: none;
+}
+
+.suggestion-item{
+  padding: 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+}
+
+.suggestion-item:hover{
+  background: #f5f5f5;
+}
+
+@media(max-width:768px){
+
+  .suggestions{
+    width: calc(100vw - 30px);
+    left: 15px !important;
+  }
+
+}
 /* FOOTER */
 .footer{
   text-align:center;
@@ -184,16 +230,20 @@ button{
       <input id="warga">
   </div-->
     
-  <div class="form-group">
+    <div class="form-group">
     <label>Nama Warga Binaan *</label>
   
-    <input
-      id="warga"
-      list="listWbp"
-      autocomplete="off"
-      placeholder="Ketik nama warga binaan..."
-    >
+    <div class="autocomplete-wrapper">
+      <input
+        type="text"
+        id="nama_wbp"
+        autocomplete="off"
+        placeholder="Cari nama warga binaan..."
+      />
   
+      <div id="suggestions" class="suggestions"></div>
+    </div>
+  </div>
     <!--datalist id="listWbp"></datalist-->
     <datalist id="listWbp">
     </datalist>
@@ -377,6 +427,72 @@ document.addEventListener("DOMContentLoaded", function(){
   const btnKirim = document.getElementById("btnKirim");
 
   const hasil = document.getElementById("hasil");
+
+  const input = document.getElementById("nama_wbp");
+const suggestions = document.getElementById("suggestions");
+
+let debounce;
+
+input.addEventListener("input", function () {
+
+  clearTimeout(debounce);
+
+  const keyword = this.value.trim();
+
+  if(keyword.length < 2){
+    suggestions.style.display = "none";
+    return;
+  }
+
+  debounce = setTimeout(() => {
+
+    fetch(API_URL + "?search=" + encodeURIComponent(keyword))
+      .then(res => res.json())
+      .then(data => {
+
+        suggestions.innerHTML = "";
+
+        if(!data.length){
+          suggestions.style.display = "none";
+          return;
+        }
+
+        data.slice(0, 6).forEach(item => {
+
+          const div = document.createElement("div");
+
+          div.className = "suggestion-item";
+          div.textContent = item;
+
+          div.onclick = () => {
+            input.value = item;
+            suggestions.style.display = "none";
+          };
+
+          suggestions.appendChild(div);
+
+        });
+
+        const rect = input.getBoundingClientRect();
+
+        suggestions.style.top = (rect.bottom + 5) + "px";
+        suggestions.style.left = rect.left + "px";
+
+        suggestions.style.display = "block";
+
+      });
+
+  }, 300);
+
+});
+
+document.addEventListener("click", function(e){
+
+  if(!e.target.closest(".autocomplete-wrapper")){
+    suggestions.style.display = "none";
+  }
+
+});
 
   // =========================
   // TOGGLE BARANG

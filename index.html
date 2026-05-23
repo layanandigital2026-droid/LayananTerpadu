@@ -194,7 +194,9 @@ button{
       placeholder="Ketik nama warga binaan..."
     >
   
-    <datalist id="listWbp"></datalist>
+    <!--datalist id="listWbp"></datalist-->
+    <datalist id="listWbp">
+    </datalist>
   </div>
 
     <div class="form-group">
@@ -295,13 +297,13 @@ document.addEventListener("DOMContentLoaded", function(){
   const nama = document.getElementById("nama");
   const nik = document.getElementById("nik");
   const wa = document.getElementById("wa");
-  
+  const warga = document.getElementById("warga");
   // =========================
   // AUTOCOMPLETE WBP
   // =========================
   
-  const warga =
-  document.getElementById("warga");
+  //const warga =
+  //document.getElementById("warga");
   
   const listWbp =
   document.getElementById("listWbp");

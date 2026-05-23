@@ -179,10 +179,23 @@ button{
       <input id="wa">
     </div>
 
-    <div class="form-group">
+    <!--div class="form-group">
       <label>Nama Warga Binaan *</label>
       <input id="warga">
-    </div>
+  </div-->
+    
+  <div class="form-group">
+    <label>Nama Warga Binaan *</label>
+  
+    <input
+      id="warga"
+      list="listWbp"
+      autocomplete="off"
+      placeholder="Ketik nama warga binaan..."
+    >
+  
+    <datalist id="listWbp"></datalist>
+  </div>
 
     <div class="form-group">
       <label>Alamat *</label>
@@ -283,6 +296,73 @@ document.addEventListener("DOMContentLoaded", function(){
   const nik = document.getElementById("nik");
   const wa = document.getElementById("wa");
   const warga = document.getElementById("warga");
+  // =========================
+  // AUTOCOMPLETE WBP
+  // =========================
+  
+  const warga =
+  document.getElementById("warga");
+  
+  const listWbp =
+  document.getElementById("listWbp");
+  
+  let timeoutCari = null;
+  
+  warga.addEventListener("input", function(){
+  
+    const keyword =
+    warga.value.trim();
+  
+    // kosong
+    if(keyword.length < 1){
+  
+      listWbp.innerHTML = "";
+  
+      return;
+    }
+  
+    clearTimeout(timeoutCari);
+  
+    timeoutCari = setTimeout(() => {
+  
+      fetch(
+        "https://script.google.com/macros/s/AKfycbwAgMLqv9-XQBmFt_4J6kO6Qh6Bg_dCsujIUZPacRQRJknDi3qvUllGRFx7rIY2Fkwccw/exec?search=" +
+        encodeURIComponent(keyword)
+      )
+  
+      .then(response => response.json())
+  
+      .then(data => {
+  
+        listWbp.innerHTML = "";
+  
+        if(Array.isArray(data)){
+  
+          data.forEach(item => {
+  
+            const option =
+            document.createElement("option");
+  
+            option.value = item;
+  
+            listWbp.appendChild(option);
+  
+          });
+  
+        }
+  
+      })
+  
+      .catch(err => {
+  
+        console.log("Autocomplete error:", err);
+  
+      });
+  
+    }, 250);
+  
+  });
+
   const alamat = document.getElementById("alamat");
   const tanggal = document.getElementById("tanggal");
   const hubungan = document.getElementById("hubungan");

@@ -142,53 +142,47 @@ button{
   }
 }
 
+/* AUTOCOMPLETE */
 .autocomplete-wrapper{
-  position: relative;
-  width: 100%;
+  position:relative;
+  width:100%;
 }
 
 #nama_wbp{
-  width: 100%;
-  padding: 14px;
-  border-radius: 14px;
-  border: 1px solid #cfd8dc;
-  font-size: 16px;
-  box-sizing: border-box;
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid #cfd8dc;
+  font-size:16px;
+  box-sizing:border-box;
 }
 
 .suggestions{
-  position: fixed;
-  background: white;
-  width: calc(100% - 40px);
-  max-width: 500px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  max-height: 250px;
-  overflow-y: auto;
-  z-index: 99999;
-  display: none;
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  background:white;
+  border-radius:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.15);
+  max-height:220px;
+  overflow-y:auto;
+  z-index:9999;
+  display:none;
+  margin-top:5px;
 }
 
 .suggestion-item{
-  padding: 14px;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-  font-size: 15px;
+  padding:14px;
+  cursor:pointer;
+  border-bottom:1px solid #eee;
+  font-size:15px;
 }
 
 .suggestion-item:hover{
-  background: #f5f5f5;
+  background:#f5f5f5;
 }
 
-@media(max-width:768px){
-
-  .suggestions{
-    width: calc(100vw - 30px);
-    left: 15px !important;
-  }
-
-}
-/* FOOTER */
 .footer{
   text-align:center;
   font-size:12px;
@@ -225,29 +219,25 @@ button{
       <input id="wa">
     </div>
 
-    <!--div class="form-group">
-      <label>Nama Warga Binaan *</label>
-      <input id="warga">
-  </div-->
-    
+    <!-- AUTOCOMPLETE -->
     <div class="form-group">
-    <label>Nama Warga Binaan *</label>
-  
-    <div class="autocomplete-wrapper">
-      <input
-        type="text"
-        id="nama_wbp"
-        autocomplete="off"
-        placeholder="Cari nama warga binaan..."
-      />
-  
-      <div id="suggestions" class="suggestions"></div>
+
+      <label>Nama Warga Binaan *</label>
+
+      <div class="autocomplete-wrapper">
+
+        <input
+          type="text"
+          id="nama_wbp"
+          autocomplete="off"
+          placeholder="Cari nama warga binaan..."
+        >
+
+        <div id="suggestions" class="suggestions"></div>
+
+      </div>
+
     </div>
-  </div>
-    <!--datalist id="listWbp"></datalist-->
-    <datalist id="listWbp">
-    </datalist>
-  </div>
 
     <div class="form-group">
       <label>Alamat *</label>
@@ -259,43 +249,41 @@ button{
       <input type="date" id="tanggal">
     </div>
 
-    <!--div class="form-group">
-      <label>Hubungan *</label>
-      <input id="hubungan">
-  </div-->
-
     <div class="form-group">
-    <label>Hubungan *</label>
-  
-    <select id="hubungan">
-      <option value="">-- Pilih Hubungan --</option>
-  
-      <option value="Keluarga Inti">
-        Keluarga Inti
-      </option>
-  
-      <option value="Keluarga Besar">
-        Keluarga Besar
-      </option>
-  
-      <option value="Teman">
-        Teman
-      </option>
-  
-      <option value="Pengacara">
-        Pengacara
-      </option>
-  
-      <option value="Wali">
-        Wali
-      </option>
-  
-      <option value="Lainnya">
-        Lainnya
-      </option>
-  
-    </select>
-  </div>
+
+      <label>Hubungan *</label>
+
+      <select id="hubungan">
+
+        <option value="">-- Pilih Hubungan --</option>
+
+        <option value="Keluarga Inti">
+          Keluarga Inti
+        </option>
+
+        <option value="Keluarga Besar">
+          Keluarga Besar
+        </option>
+
+        <option value="Teman">
+          Teman
+        </option>
+
+        <option value="Pengacara">
+          Pengacara
+        </option>
+
+        <option value="Wali">
+          Wali
+        </option>
+
+        <option value="Lainnya">
+          Lainnya
+        </option>
+
+      </select>
+
+    </div>
 
     <!-- BARANG -->
     <div class="section-title">
@@ -303,15 +291,18 @@ button{
     </div>
 
     <div class="form-group">
+
       <label>Apakah membawa barang?</label>
 
       <select id="barang">
         <option value="Ya">Ya</option>
         <option value="Tidak" selected>Tidak</option>
       </select>
+
     </div>
 
     <div class="form-group">
+
       <label>Jika ya, sebutkan</label>
 
       <select id="jenis_barang">
@@ -320,6 +311,7 @@ button{
         <option>Pakaian</option>
         <option>Lainnya</option>
       </select>
+
     </div>
 
     <!-- CHECKBOX -->
@@ -344,76 +336,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
   let isSubmitting = false;
 
+  const API_URL =
+  "https://script.google.com/macros/s/AKfycbxm35RpBQHcNz5TU5W3CoYf3mEm_2lvVucE_y2tOD4Tnip73PSiJcM5iraaTrcGSh9myw/exec";
+
   const nama = document.getElementById("nama");
   const nik = document.getElementById("nik");
   const wa = document.getElementById("wa");
-  const warga = document.getElementById("warga");
-  // =========================
-  // AUTOCOMPLETE WBP
-  // =========================
-  
-  //const warga =
-  //document.getElementById("warga");
-  
-  const listWbp =
-  document.getElementById("listWbp");
-  
-  let timeoutCari = null;
-  
-  warga.addEventListener("input", function(){
-  
-    const keyword =
-    warga.value.trim();
-  
-    // kosong
-    if(keyword.length < 1){
-  
-      listWbp.innerHTML = "";
-  
-      return;
-    }
-  
-    clearTimeout(timeoutCari);
-  
-    timeoutCari = setTimeout(() => {
-  
-      fetch(
-        "https://script.google.com/macros/s/AKfycbxm35RpBQHcNz5TU5W3CoYf3mEm_2lvVucE_y2tOD4Tnip73PSiJcM5iraaTrcGSh9myw/exec?search=" +
-        encodeURIComponent(keyword)
-      )
-  
-      .then(response => response.json())
-  
-      .then(data => {
-  
-        listWbp.innerHTML = "";
-  
-        if(Array.isArray(data)){
-  
-          data.forEach(item => {
-  
-            const option =
-            document.createElement("option");
-  
-            option.value = item;
-  
-            listWbp.appendChild(option);
-  
-          });
-  
-        }
-  
-      })
-  
-      .catch(err => {
-  
-        console.log("Autocomplete error:", err);
-  
-      });
-  
-    }, 250);
-  
-  });
+
+  const warga =
+  document.getElementById("nama_wbp");
 
   const alamat = document.getElementById("alamat");
   const tanggal = document.getElementById("tanggal");
@@ -428,44 +359,64 @@ document.addEventListener("DOMContentLoaded", function(){
 
   const hasil = document.getElementById("hasil");
 
-  const input = document.getElementById("nama_wbp");
-const suggestions = document.getElementById("suggestions");
+  const suggestions =
+  document.getElementById("suggestions");
 
-let debounce;
+  // =========================
+  // AUTOCOMPLETE
+  // =========================
 
-input.addEventListener("input", function () {
+  let debounce;
 
-  clearTimeout(debounce);
+  warga.addEventListener("input", function(){
 
-  const keyword = this.value.trim();
+    clearTimeout(debounce);
 
-  if(keyword.length < 2){
-    suggestions.style.display = "none";
-    return;
-  }
+    const keyword =
+    this.value.trim();
 
-  debounce = setTimeout(() => {
+    if(keyword.length < 1){
 
-    fetch(API_URL + "?search=" + encodeURIComponent(keyword))
+      suggestions.style.display = "none";
+
+      return;
+    }
+
+    debounce = setTimeout(() => {
+
+      fetch(
+        API_URL +
+        "?search=" +
+        encodeURIComponent(keyword)
+      )
+
       .then(res => res.json())
+
       .then(data => {
 
         suggestions.innerHTML = "";
 
-        if(!data.length){
+        if(!data || !data.length){
+
           suggestions.style.display = "none";
+
           return;
         }
 
-        data.slice(0, 6).forEach(item => {
+        data.slice(0,5).forEach(item => {
 
-          const div = document.createElement("div");
+          const div =
+          document.createElement("div");
 
-          div.className = "suggestion-item";
+          div.className =
+          "suggestion-item";
+
           div.textContent = item;
 
           div.onclick = () => {
-            input.value = item;
+
+            warga.value = item;
+
             suggestions.style.display = "none";
           };
 
@@ -473,26 +424,32 @@ input.addEventListener("input", function () {
 
         });
 
-        const rect = input.getBoundingClientRect();
-
-        suggestions.style.top = (rect.bottom + 5) + "px";
-        suggestions.style.left = rect.left + "px";
-
         suggestions.style.display = "block";
+
+      })
+
+      .catch(err => {
+
+        console.log(err);
+
+        suggestions.style.display = "none";
 
       });
 
-  }, 300);
+    }, 200);
 
-});
+  });
 
-document.addEventListener("click", function(e){
+  // TUTUP DROPDOWN
+  document.addEventListener("click", function(e){
 
-  if(!e.target.closest(".autocomplete-wrapper")){
-    suggestions.style.display = "none";
-  }
+    if(!e.target.closest(".autocomplete-wrapper")){
 
-});
+      suggestions.style.display = "none";
+
+    }
+
+  });
 
   // =========================
   // TOGGLE BARANG
@@ -924,4 +881,4 @@ function goHome(){
 </div>
 
 </body>
-</html>
+  </html>

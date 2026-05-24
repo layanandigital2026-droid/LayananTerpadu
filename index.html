@@ -351,6 +351,7 @@ button{
 document.addEventListener("DOMContentLoaded", function(){
 
   let isSubmitting = false;
+  let namaValid = false;
 
   const API_URL =
   "https://script.google.com/macros/s/AKfycbxo5vG3sNNOXWM_sevYyu9zW3ivlUF27r7P5Z7xxSoqF5DrQDiZXXkSB-t8HbfGtfKLfg/exec";
@@ -392,6 +393,7 @@ warga.addEventListener("input", function(){
   const keyword =
   this.value.trim();
 
+  namaValid = false;
   //if(keyword.length < 1){
   if(keyword.length < 2){
     suggestions.style.display = "none";
@@ -465,10 +467,12 @@ warga.addEventListener("input", function(){
 
         div.onclick = () => {
 
-          warga.value = item;
-
-          suggestions.style.display = "none";
-        };
+        warga.value = item;
+      
+        namaValid = true;
+      
+        suggestions.style.display = "none";
+      };
 
         suggestions.appendChild(div);
 
@@ -592,6 +596,16 @@ warga.addEventListener("input", function(){
       return;
     }
 
+    // VALIDASI NAMA WBP
+    if(!namaValid){
+    
+      showAlert(
+        "❌ Nama warga binaan harus dipilih dari daftar autocomplete. Jika nama tidak ditemukan silakan hubungi Admin Lapas."
+      );
+    
+      return;
+    }
+    
     // CHECKBOX
     if(!setuju.checked){
       showAlert("⚠️ Anda harus menyetujui peraturan!");

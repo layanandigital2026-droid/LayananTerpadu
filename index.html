@@ -396,12 +396,49 @@ warga.addEventListener("input", function(){
 
       suggestions.innerHTML = "";
 
+      //if(!data || !data.length){
+
+        //suggestions.style.display = "none";
+
+        //return;
+      //}
       if(!data || !data.length){
 
-        suggestions.style.display = "none";
-
-        return;
-      }
+      suggestions.innerHTML = `
+    
+        <div style="
+          padding:14px;
+          font-size:14px;
+          line-height:1.5;
+        ">
+    
+          ❌ Nama warga binaan tidak ditemukan
+    
+          <br><br>
+    
+          Silakan hubungi CP:
+          <br>
+    
+          <a
+            href="https://wa.me/6282378414836"
+            target="_blank"
+            style="
+              color:#2563eb;
+              font-weight:600;
+              text-decoration:none;
+            "
+          >
+            📞 Admin Lapas
+          </a>
+    
+        </div>
+    
+      `;
+    
+      suggestions.style.display = "block";
+    
+      return;
+    }
 
       // TAMPILKAN SEMUA DATA
       data.forEach(item => {

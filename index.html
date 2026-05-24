@@ -337,7 +337,7 @@ document.addEventListener("DOMContentLoaded", function(){
   let isSubmitting = false;
 
   const API_URL =
-  "https://script.google.com/macros/s/AKfycbxm35RpBQHcNz5TU5W3CoYf3mEm_2lvVucE_y2tOD4Tnip73PSiJcM5iraaTrcGSh9myw/exec";
+  "https://script.google.com/macros/s/AKfycbztUEp8ao2Nt2-Y-1uSm06-0p3mJOl6BHBBrgB8Vxl_1TRP72t3RVjCcJOG5ykQjNagjw/exec";
 
   const nama = document.getElementById("nama");
   const nik = document.getElementById("nik");
@@ -363,82 +363,83 @@ document.addEventListener("DOMContentLoaded", function(){
   document.getElementById("suggestions");
 
   // =========================
-  // AUTOCOMPLETE
-  // =========================
+// AUTOCOMPLETE
+// =========================
 
-  let debounce;
+let debounce;
 
-  warga.addEventListener("input", function(){
+warga.addEventListener("input", function(){
 
-    clearTimeout(debounce);
+  clearTimeout(debounce);
 
-    const keyword =
-    this.value.trim();
+  const keyword =
+  this.value.trim();
 
-    if(keyword.length < 1){
+  //if(keyword.length < 1){
+  if(keyword.length < 2){
+    suggestions.style.display = "none";
 
-      suggestions.style.display = "none";
+    return;
+  }
 
-      return;
-    }
+  debounce = setTimeout(() => {
 
-    debounce = setTimeout(() => {
+    fetch(
+      API_URL +
+      "?search=" +
+      encodeURIComponent(keyword)
+    )
 
-      fetch(
-        API_URL +
-        "?search=" +
-        encodeURIComponent(keyword)
-      )
+    .then(res => res.json())
 
-      .then(res => res.json())
+    .then(data => {
 
-      .then(data => {
+      suggestions.innerHTML = "";
 
-        suggestions.innerHTML = "";
-
-        if(!data || !data.length){
-
-          suggestions.style.display = "none";
-
-          return;
-        }
-
-        data.slice(0,5).forEach(item => {
-
-          const div =
-          document.createElement("div");
-
-          div.className =
-          "suggestion-item";
-
-          div.textContent = item;
-
-          div.onclick = () => {
-
-            warga.value = item;
-
-            suggestions.style.display = "none";
-          };
-
-          suggestions.appendChild(div);
-
-        });
-
-        suggestions.style.display = "block";
-
-      })
-
-      .catch(err => {
-
-        console.log(err);
+      if(!data || !data.length){
 
         suggestions.style.display = "none";
 
+        return;
+      }
+
+      // TAMPILKAN SEMUA DATA
+      data.forEach(item => {
+
+        const div =
+        document.createElement("div");
+
+        div.className =
+        "suggestion-item";
+
+        div.textContent = item;
+
+        div.onclick = () => {
+
+          warga.value = item;
+
+          suggestions.style.display = "none";
+        };
+
+        suggestions.appendChild(div);
+
       });
 
-    }, 200);
+      suggestions.style.display = "block";
 
-  });
+    })
+
+    .catch(err => {
+
+      console.log(err);
+
+      suggestions.style.display = "none";
+
+    });
+
+  }, 200);
+
+});
 
   // TUTUP DROPDOWN
   document.addEventListener("click", function(e){
@@ -535,7 +536,8 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
     // VALIDASI HP
-    if(!/^\d{10,13}$/.test(wa.value)){
+    //if(!/^\d{10,13}$/.test(wa.value)){
+    if(!/^08\d{8,11}$/.test(wa.value)){
       showAlert("❌ Nomor HP harus angka dan maksimal 13 digit!");
       return;
     }

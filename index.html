@@ -250,6 +250,22 @@ button{
     </div>
 
     <div class="form-group">
+    <label>Jumlah Orang Yang Akan Berkunjung *</label>
+  
+    <select id="jumlah_orang">
+  
+      <option value="">-- Pilih Jumlah --</option>
+  
+      <option value="1">1 Orang</option>
+      <option value="2">2 Orang</option>
+      <option value="3">3 Orang</option>
+      <option value="4">4 Orang</option>
+      <option value="5">5 Orang</option>
+  
+    </select>
+  </div>
+    
+    <div class="form-group">
 
       <label>Hubungan *</label>
 
@@ -337,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function(){
   let isSubmitting = false;
 
   const API_URL =
-  "https://script.google.com/macros/s/AKfycbztUEp8ao2Nt2-Y-1uSm06-0p3mJOl6BHBBrgB8Vxl_1TRP72t3RVjCcJOG5ykQjNagjw/exec";
+  "https://script.google.com/macros/s/AKfycbxo5vG3sNNOXWM_sevYyu9zW3ivlUF27r7P5Z7xxSoqF5DrQDiZXXkSB-t8HbfGtfKLfg/exec";
 
   const nama = document.getElementById("nama");
   const nik = document.getElementById("nik");
@@ -348,6 +364,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   const alamat = document.getElementById("alamat");
   const tanggal = document.getElementById("tanggal");
+  const jumlah_orang = document.getElementById("jumlah_orang");
   const hubungan = document.getElementById("hubungan");
 
   const barang = document.getElementById("barang");
@@ -396,12 +413,7 @@ warga.addEventListener("input", function(){
 
       suggestions.innerHTML = "";
 
-      //if(!data || !data.length){
-
-        //suggestions.style.display = "none";
-
-        //return;
-      //}
+      
       if(!data || !data.length){
 
       suggestions.innerHTML = `
@@ -560,6 +572,7 @@ warga.addEventListener("input", function(){
       !warga.value ||
       !alamat.value ||
       !tanggal.value ||
+      !jumlah_orang.value ||
       !hubungan.value
     ){
       showAlert("⚠️ Semua data wajib diisi ya!");
@@ -653,6 +666,7 @@ warga.addEventListener("input", function(){
         warga:warga.value,
         alamat:alamat.value,
         tanggal:tanggal.value,
+        jumlah_orang:jumlah_orang.value,
         hubungan:hubungan.value,
         barang:barang.value,
         jenis_barang:jenis_barang.value

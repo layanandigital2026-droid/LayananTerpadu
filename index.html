@@ -625,39 +625,40 @@ warga.addEventListener("input", function(){
     }
 
     // VALIDASI JAM
-    const now = new Date();
+const now = new Date();
 
-    const waktuWIB = new Date(
-      now.toLocaleString("en-US", {
-        timeZone:"Asia/Jakarta"
-      })
-    );
+const waktuWIB = new Date(
+  now.toLocaleString("en-US", {
+    timeZone: "Asia/Jakarta"
+  })
+);
 
-    const hariSekarang = waktuWIB.getDay();
+const hariSekarang = waktuWIB.getDay();
 
-    const jam = waktuWIB.getHours();
+const jam = waktuWIB.getHours();
 
-    const menit = waktuWIB.getMinutes();
+const menit = waktuWIB.getMinutes();
 
-    const totalMenit = jam * 60 + menit;
+const totalMenit = jam * 60 + menit;
 
-    // Senin-Kamis
-    if(hariSekarang >= 1 && hariSekarang <= 4){
+// Senin-Kamis
+if (hariSekarang >= 1 && hariSekarang <= 4) {
 
-      if(totalMenit < 900 || totalMenit > 960){
+  // 09:00 = 540 menit
+  // 17:00 = 1020 menit
+  if (totalMenit < 540 || totalMenit > 1020) {
 
-        showAlert("❌ Pengambilan antrian hanya pukul 09:00 - 15:45");
+    showAlert("❌ Pengambilan antrian hanya pukul 09:00 - 17:00");
 
-        return;
-      }
+    return;
+  }
 
-    } else {
+} else {
 
-      showAlert("❌ Hari ini tidak melayani pengambilan antrian");
+  showAlert("❌ Hari ini tidak melayani pengambilan antrian");
 
-      return;
-    }
-
+  return;
+}
     // =========================
     // SUBMIT
     // =========================
@@ -668,7 +669,7 @@ warga.addEventListener("input", function(){
 
     btnKirim.innerText = "Mengirim...";
 
-    fetch("https://script.google.com/macros/s/AKfycbzIzJoMr4fA2Zjj9V6dJAH5yuTHj0s_VRVJrSp93-sPmtYkjy_SYVlSxu6jLKjhoFvMEg/exec", {
+    fetch("https://script.google.com/macros/s/AKfycby7evFu9ZTOQSEPIbJ__cAgaO4hq5X9myJSDt96GEHmgrlL2b0FDjOxhYvu3hNYM6iVrw/exec", {
 
       method:"POST",
 

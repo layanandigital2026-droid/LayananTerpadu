@@ -644,7 +644,7 @@ warga.addEventListener("input", function(){
     // Senin-Kamis
     if(hariSekarang >= 1 && hariSekarang <= 4){
 
-      if(totalMenit < 900 || totalMenit > 1000){
+      if(totalMenit < 900 || totalMenit > 960){
 
         showAlert("❌ Pengambilan antrian hanya pukul 09:00 - 15:45");
 
@@ -668,7 +668,7 @@ warga.addEventListener("input", function(){
 
     btnKirim.innerText = "Mengirim...";
 
-    fetch("https://script.google.com/macros/s/AKfycbxihgUiBWnSN_DPt2WBEG4F5OPANNN2TpisdY2GossyDQSuzE47sv5fbDm1qTDDOEv9xw/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbzIzJoMr4fA2Zjj9V6dJAH5yuTHj0s_VRVJrSp93-sPmtYkjy_SYVlSxu6jLKjhoFvMEg/exec", {
 
       method:"POST",
 

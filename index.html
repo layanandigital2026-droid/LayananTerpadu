@@ -354,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function(){
   let namaValid = false;
 
   const API_URL =
-  "https://script.google.com/macros/s/AKfycbwPgimox5P2aFPYvRLgONwZEDlcUETWnx2o3EWgWEtPFm5rAihRZ4AunAv2b4FKjt6j6w/exec";
+  "https://script.google.com/macros/s/AKfycbzNQNy1F_nrVW_-6QrGH-i7ZLLz_DnFpDkn7BqJ1u-7Nj-3nPCIQ37yV8ZMmhdkoh7Zyg/exec";
 
   const nama = document.getElementById("nama");
   const nik = document.getElementById("nik");
@@ -645,10 +645,11 @@ const totalMenit = jam * 60 + menit;
 if (hariSekarang >= 1 && hariSekarang <= 4) {
 
   // 09:00 = 540 menit
+  // 11:45 = 705
   // 17:00 = 1020 menit
-  if (totalMenit < 540 || totalMenit > 1020) {
+  if (totalMenit < 540 || totalMenit > 705) {
 
-    showAlert("❌ Pengambilan antrian hanya pukul 09:00 - 17:00");
+    showAlert("❌ Pengambilan antrian hanya pukul 09:00 - 11:45");
 
     return;
   }
@@ -669,7 +670,7 @@ if (hariSekarang >= 1 && hariSekarang <= 4) {
 
     btnKirim.innerText = "Mengirim...";
 
-    fetch("https://script.google.com/macros/s/AKfycby7evFu9ZTOQSEPIbJ__cAgaO4hq5X9myJSDt96GEHmgrlL2b0FDjOxhYvu3hNYM6iVrw/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbzNQNy1F_nrVW_-6QrGH-i7ZLLz_DnFpDkn7BqJ1u-7Nj-3nPCIQ37yV8ZMmhdkoh7Zyg/exec", {
 
       method:"POST",
 

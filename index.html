@@ -616,7 +616,7 @@ warga.addEventListener("input", function(){
 
     const hari = tanggalInput.getDay();
 
-    if( hari === 6 || hari === 5){
+    if( hari === 6 || hari === 5 || hari === 0){
 
       showAlert("❌ Tidak bisa ambil antrian untuk Jumat/Sabtu/Minggu");
 
@@ -624,40 +624,40 @@ warga.addEventListener("input", function(){
     }
 
     // VALIDASI JAM
-const now = new Date();
+    const now = new Date();
+    
+    const waktuWIB = new Date(
+      now.toLocaleString("en-US", {
+        timeZone: "Asia/Jakarta"
+      })
+    );
+    
+    const hariSekarang = waktuWIB.getDay();
+    
+    const jam = waktuWIB.getHours();
+    
+    const menit = waktuWIB.getMinutes();
+    
+    const totalMenit = jam * 60 + menit;
 
-const waktuWIB = new Date(
-  now.toLocaleString("en-US", {
-    timeZone: "Asia/Jakarta"
-  })
-);
-
-const hariSekarang = waktuWIB.getDay();
-
-const jam = waktuWIB.getHours();
-
-const menit = waktuWIB.getMinutes();
-
-const totalMenit = jam * 60 + menit;
-
-// Senin-Kamis
-if (hariSekarang >= 0 && hariSekarang <= 4) {
-
-  // 09:00 = 540 menit
-  // 11:45 = 705
-  // 17:00 = 1020 menit
-  if (totalMenit < 540 || totalMenit > 840) {
-
-    showAlert("❌ Pengambilan antrian hanya pukul 09:00 - 11:45");
-
-    return;
-  }
-
-} else {
-
-  showAlert("❌ Hari ini tidak melayani pengambilan antrian");
-
-  return;
+    // Senin-Kamis
+    if (hariSekarang >= 1 && hariSekarang <= 4) {
+    
+      // 09:00 = 540 menit
+      // 11:45 = 705
+      // 17:00 = 1020 menit
+      if (totalMenit < 540 || totalMenit > 705) {
+    
+        showAlert("❌ Pengambilan antrian hanya pukul 09:00 - 11:45");
+    
+        return;
+      }
+    
+    } else {
+    
+      showAlert("❌ Hari ini tidak melayani pengambilan antrian");
+    
+      return;
 }
     // =========================
     // SUBMIT
@@ -669,7 +669,7 @@ if (hariSekarang >= 0 && hariSekarang <= 4) {
 
     btnKirim.innerText = "Mengirim...";
 
-    fetch("https://script.google.com/macros/s/AKfycbz_iFmiw3kCFhvPkK17UP_rJlqbN4iILiDwJ7KdGGM3YgvvrUhxjjNpVU98cAqZe98Enw/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbze5LLJQ_XZvniQbxMR7CawYyQ-ITD5DRF_07rDpK3AHeP_vYpEkQ5DN_cODGZEj8ZWZg/exec", {
 
       method:"POST",
 

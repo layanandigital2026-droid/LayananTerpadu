@@ -753,22 +753,15 @@ if (hariSekarang >= 0 && hariSekarang <= 4) {
 
         const nomorAntrian = data.nomor;
 
-        const nomorAntrian = data.nomor;
-
-        const tanggalDaftar = new Date().toLocaleDateString("id-ID", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric"
-        });
-        
         const qrData =
           "Nomor: " + nomorAntrian + "\n" +
           "Nama Pengunjung: " + nama.value + "\n" +
           "Warga Binaan: " + warga.value + "\n" +
-          "Tanggal Pendaftaran: " + tanggalDaftar + "\n" +
-          "Tanggal Berkunjung: " + tanggal.value + "\n";
-        
+          "Tanggal Pendaftaran: " + tanggal.value+ "\n" +
+          "Tanggal Berkunjung: " + tanggal.value+ "\n";
+
         const qrEncoded = encodeURIComponent(qrData);
+
         hasil.innerHTML = `
 
           <div style="
@@ -800,11 +793,11 @@ if (hariSekarang >= 0 && hariSekarang <= 4) {
                 border-bottom:1px dashed #ddd;
                 padding:4px 0;
               ">
-                <span>Nama</span>
+                <span>Nama Pengunjung</span>
                 <span><b>${nama.value}</b></span>
               </div>
 
-               <div style="
+              <div style="
                 display:flex;
                 justify-content:space-between;
                 border-bottom:1px dashed #ddd;
@@ -813,17 +806,7 @@ if (hariSekarang >= 0 && hariSekarang <= 4) {
                 <span>Warga Binaan</span>
                 <span><b>${warga.value}</b></span>
               </div>
-              
-              <div style="
-                display:flex;
-                justify-content:space-between;
-                border-bottom:1px dashed #ddd;
-                padding:4px 0;
-              ">
-                <span>Tanggal Pendaftaran</span>
-                <span><b>${tanggalDaftar}</b></span>
-              </div>
-              
+
               <div style="
                 display:flex;
                 justify-content:space-between;
@@ -889,7 +872,7 @@ if (hariSekarang >= 0 && hariSekarang <= 4) {
             </button>
 
           </div>
-        `;
+        `; 
 
         btnKirim.innerText = "✔ Sudah Terdaftar";
 

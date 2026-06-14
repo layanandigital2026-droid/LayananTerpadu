@@ -752,8 +752,13 @@ if (hariSekarang >= 0 && hariSekarang <= 4) {
       if(data.status === "ok"){
 
         const nomorAntrian = data.nomor;
-
         const tanggalDaftar = new Date().toLocaleDateString("id-ID", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        });
+      
+        const tanggalBerkunjung = new Date(tanggal.value).toLocaleDateString("id-ID", {
           day: "2-digit",
           month: "2-digit",
           year: "numeric"
@@ -764,10 +769,9 @@ if (hariSekarang >= 0 && hariSekarang <= 4) {
           "Nama Pengunjung: " + nama.value + "\n" +
           "Warga Binaan: " + warga.value + "\n" +
           "Tanggal Pendaftaran: " + tanggalDaftar + "\n" +
-          "Tanggal Berkunjung: " + tanggal.value + "\n";
+          "Tanggal Berkunjung: " + tanggalBerkunjung + "\n";
         
         const qrEncoded = encodeURIComponent(qrData);
-
         hasil.innerHTML = `
 
           <div style="
@@ -799,7 +803,7 @@ if (hariSekarang >= 0 && hariSekarang <= 4) {
                 border-bottom:1px dashed #ddd;
                 padding:4px 0;
               ">
-                <span>Nama Pengunjung: </span>
+                <span>Nama Pengunjung </span>
                 <span><b>${nama.value}</b></span>
               </div>
 
@@ -829,7 +833,7 @@ if (hariSekarang >= 0 && hariSekarang <= 4) {
                 padding:4px 0;
               ">
                 <span>Tanggal Berkunjung</span>
-                <span><b>${tanggal.value}</b></span>
+                <span><b>${tanggalBerkunjung}</b></span>
               </div>
 </div>
            
